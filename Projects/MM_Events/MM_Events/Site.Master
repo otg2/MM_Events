@@ -1,6 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="MM_Events.SiteMaster" %>
-<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
-<%@ Register assembly="Telerik.Web.UI.Skins" namespace="Telerik.Web.UI.Skins" tagprefix="telerikh" %>
+
 
 <!DOCTYPE html>
 
@@ -49,7 +48,10 @@
                         <span class="icon-bar"></span>
                         
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <div style="float:left">
+                        <asp:Image   runat="server" ID="main_logo" ImageUrl="~/Image/SEP_LOGO.JPG" />
+                    </div>
+                    <a class="navbar-brand" runat="server" href="~/">Swedish Events Planners SEP</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -82,7 +84,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Fear & Ear production</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Fears & Ear production</p>
             </footer>
         </div>
     </form>

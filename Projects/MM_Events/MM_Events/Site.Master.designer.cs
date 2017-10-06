@@ -13,6 +13,15 @@ namespace MM_Events {
     public partial class SiteMaster {
         
         /// <summary>
+        /// main_logo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image main_logo;
+        
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>

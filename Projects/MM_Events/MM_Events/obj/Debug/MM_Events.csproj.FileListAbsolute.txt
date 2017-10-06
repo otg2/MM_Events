@@ -55,3 +55,4 @@ c:\users\ottarg\documents\visual studio 2013\Projects\MM_Events\MM_Events\bin\Te
 c:\users\ottarg\documents\visual studio 2013\Projects\MM_Events\MM_Events\bin\Telerik.Windows.Documents.Core.dll
 c:\users\ottarg\documents\visual studio 2013\Projects\MM_Events\MM_Events\bin\Telerik.Windows.Documents.Flow.dll
 c:\users\ottarg\documents\visual studio 2013\Projects\MM_Events\MM_Events\bin\Telerik.Windows.Documents.Spreadsheet.dll
+C:\Users\ottarg\documents\visual studio 2013\Projects\MM_Events\MM_Events\obj\Debug\MM_Events.dll.licenses

@@ -74,22 +74,28 @@
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.Spreadsheet">
+    <Reference Include="Telerik.Web.Spreadsheet, Version=2016.1.301.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Web.Spreadsheet.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI">
+    <Reference Include="Telerik.Web.UI, Version=2016.1.412.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Web.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins">
+    <Reference Include="Telerik.Web.UI.Skins, Version=2016.1.412.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Web.UI.Skins.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Core">
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Windows.Documents.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Flow">
+    <Reference Include="Telerik.Windows.Documents.Flow, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Windows.Documents.Flow.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Spreadsheet">
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2016.1.212.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
@@ -169,22 +175,55 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="App_Data\Event_Data.mdf" />
+    <Content Include="App_Data\Event_Data_log.ldf">
+      <DependentUpon>Event_Data.mdf</DependentUpon>
+    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Image\SEP_LOGO.JPG" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Scripts\GSAP\.DS_Store" />
+    <Content Include="Scripts\GSAP\plugins\.DS_Store" />
+    <Content Include="Scripts\GSAP\utils\.DS_Store" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\balloon.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\clientQueryString.js" />
+    <Content Include="Scripts\gridClickHandler.js" />
+    <Content Include="Scripts\GSAP\easing\EasePack.min.js" />
+    <Content Include="Scripts\GSAP\jquery.gsap.min.js" />
+    <Content Include="Scripts\GSAP\plugins\AttrPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\BezierPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\ColorPropsPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\CSSPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\CSSRulePlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\DirectionalRotationPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\EaselPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\EndArrayPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\KineticPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\RaphaelPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\RoundPropsPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\ScrollToPlugin.min.js" />
+    <Content Include="Scripts\GSAP\plugins\TextPlugin.min.js" />
+    <Content Include="Scripts\GSAP\TimelineLite.min.js" />
+    <Content Include="Scripts\GSAP\TimelineMax.min.js" />
+    <Content Include="Scripts\GSAP\TweenLite.min.js" />
+    <Content Include="Scripts\GSAP\TweenMax.min.js" />
+    <Content Include="Scripts\GSAP\utils\Draggable.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\math.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Mousetrap.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
@@ -214,7 +253,9 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -279,6 +320,7 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data_Utilities.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,6 +348,8 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="UrlGeneratorCollection.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -314,8 +358,9 @@
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

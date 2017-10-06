@@ -13,6 +13,33 @@ namespace MM_Events {
     public partial class About {
         
         /// <summary>
+        /// debug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label debug;
+        
+        /// <summary>
+        /// LookForUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList LookForUsers;
+        
+        /// <summary>
+        /// LookForRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList LookForRoles;
+        
+        /// <summary>
         /// test control.
         /// </summary>
         /// <remarks>
