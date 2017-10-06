@@ -54,7 +54,9 @@ public static class Data_Utilities
     {
         DataTable _dataView = new DataTable();
 
-        string _query = "select Displayname, UserID, username from dbo.dnn_Users where isdeleted=0 order by displayname";
+        string _query = "select UserDisplay, UserName from [Users] where UserRole in('AUDIO','CHEF','CATERING','DECORATION','GRAPHIC_DESIGNER','IT', "
+        + " 'PHOTOGRAPHER') order by userrole";
+
 
         ConnectionStringSettings _connString = ConfigurationManager.ConnectionStrings["SiteSqlServer"];
         using (SqlConnection con = new SqlConnection(_connString.ToString()))
@@ -70,8 +72,8 @@ public static class Data_Utilities
         }
         // Set datasource and bind it
         aComboBox.DataSource = _dataView;
-        aComboBox.DataTextField = "Displayname";
-        aComboBox.DataValueField = "UserId";
+        aComboBox.DataTextField = "UserDisplay";
+        aComboBox.DataValueField = "UserName";
         aComboBox.DataBind();
     }
 
