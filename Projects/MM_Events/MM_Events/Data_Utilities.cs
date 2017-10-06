@@ -108,10 +108,6 @@ public static class Data_Utilities
 
     }
 
-   
-
-
-
     // Returns a Radgrid mastertableview as a DataTable 
     public static DataTable GetGridInfoAsDataTable(RadGrid aRadGrid)
     {
@@ -133,8 +129,6 @@ public static class Data_Utilities
         return dtRecords;
     }
 
-
-
     // NOT WORKING
     public static int GetColumnIndexByName(GridView grid, string name)
     {
@@ -148,6 +142,7 @@ public static class Data_Utilities
 
         return -1;
     }
+
     // We got similar functions in utilities
     //Concate multiple strings with a . in between each one
     public static string CombineElements(string[] anArray)
@@ -262,9 +257,62 @@ public static class Data_Utilities
         return _dataView;
     }
 
-    
+
     // Used to modify the body content of emails.
     // Turns all image snapshots to alternitive view, so they can be sent in email
     // If the image is c/p from computer (which the control cannot handle) a "error" image is used
-    
+
+    //Used to fetch a task for a given id
+    public static DataRow getRequest(int id)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", id.ToString()}
+        };
+
+        DataTable _table = getSQLDataByQuery_Parameters("select * from Request where ReqId = @ReqId", _parameters);
+
+        return _table.Rows[0];
+    }
+
+    public static void setResponsibleForRequest(int requestId, string sendTo)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() },
+            new string[] { "@ReqResp", sendTo}
+        };
+
+        DataTable _table = getSQLDataByQuery_Parameters("UPDATE Request SET ReqResp = @ReqResp where ReqId = @ReqId", _parameters);
+    }
+
+    public static void setEventStatusToAccepted(int requestId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() }
+        };
+
+        var query = "UPDATE Events";
+        query += "SET EventStatus = 'APPROVED'";
+        query += "WHERE EventId = (SELECT ReqTaskId";
+        query += "FROM Request";
+        query += "WHERE ReqId = @ReqId)";
+
+        DataTable _table = getSQLDataByQuery_Parameters(query, _parameters);
+    }
+
+    public static void setEventRequestToClosed(int requestId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() }
+        };
+
+        var query = "UPDATE Request";
+        query += "SET ReqStatus = 'CLOSED'";
+        query += "WHERE ReqId = @ReqId";
+
+        DataTable _table = getSQLDataByQuery_Parameters(query, _parameters);
+    }
 }
