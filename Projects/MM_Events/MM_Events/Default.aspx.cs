@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using MM_Events.Controls;
 
 namespace MM_Events
 {
@@ -73,24 +74,25 @@ namespace MM_Events
             DataTable _table = Data_Utilities.getSQLDataByQuery_Parameters("select userrole from users where Username = @UserName", _parameters);
                     
             string _userRole = _table.Rows[0][0].ToString() ;
-                    
-            if (_userRole == "SCS" || _userRole == "CS")
-            {
-                Div_CreateNewEventRequest.Visible = true;
-            }
-
+            
+            // Set the create new event request view
+            Div_CreateNewEventRequest.Visible = (_userRole == "SCS" || _userRole == "CS");
+            
+            // Set the task creation view
+            EventForm_Task.Visible = _userRole == "SDM" || _userRole == "PM";
+           
 
             // Populate Tabs list
             List<string[]> _tParameters = new List<string[]>();
             _tParameters.Add(new string[] { "@TaskTeam", _userRole });
-            DataTable _taskTable = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Task] where [TaskTeam]=@TaskTeam", _tParameters);
+            DataTable _taskTable = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Task] where [TaskTeam]=@TaskTeam order by [TaskDueDate] asc", _tParameters);
             if (_taskTable.Rows.Count != 0)
             {
                 for (int i = 0; i < _taskTable.Rows.Count; i++)
                 {
                     RadButton _generatedTask_Button = new RadButton();
                     _generatedTask_Button.RenderMode = RenderMode.Lightweight;
-                    _generatedTask_Button.Text = _taskTable.Rows[i]["TaskCreator"].ToString();
+                    _generatedTask_Button.Text = _taskTable.Rows[i]["TaskName"].ToString() + " | " + _taskTable.Rows[i]["TaskDueDate"].ToString();
                     _generatedTask_Button.Value = _taskTable.Rows[i]["TaskId"].ToString();
                     _generatedTask_Button.AutoPostBack = false;
                     _generatedTask_Button.OnClientClicked = "openTaskForm";
@@ -134,8 +136,14 @@ namespace MM_Events
             {
                 if (_arguments[0] == "init_Task")
                 {
-                    
-
+                    ViewTask_Name.Text = "hneta" ;
+                    ViewTask_Descr.Text = "pizza";
+                    ViewTask_CreatedInfo.Text = "ottar date bla";
+                    ViewTask_OpenEventInformation.Text =  "test";
+                    ViewTask_Budget.Text = "5000";
+                    ViewTask_ExtraBudget.Value = 0;
+                    ViewTask_ExtraComment.Text = "";
+                    ViewTask_Accept.Value = "-1";
 
                 }
                 if (_arguments[0] == "init_Request")
@@ -153,8 +161,8 @@ namespace MM_Events
                     RequestEvent_Budget.Text = _eventInfo.Rows[0]["EventBudget"].ToString();
                     RequestEvent_Guests.Text = _eventInfo.Rows[0]["EventGuests"].ToString();
                     RequestEvent_Type.Text = _eventInfo.Rows[0]["EventType"].ToString();
-                    RequestEvent_EventId.Text = _eventInfo.Rows[0]["EventId"].ToString();
 
+                    RequestEvent_EventId.Text = _requestInfo.Rows[0]["ReqId"].ToString();
 
                     if(_requestInfo.Rows[0]["ReqResp"].ToString() == "SCS")
                     {
@@ -170,9 +178,6 @@ namespace MM_Events
                         RequestEvent_FM_Budget.ReadOnly = true;
                         RequestEvent_FM_Comment.ReadOnly = true;
                     }
-
-                    
-
                 }
             }
 
@@ -206,9 +211,6 @@ namespace MM_Events
             GridDataItem _selectedEvent = Radgrid_Events.MasterTableView.GetSelectedItems()[0];
             string _eventId = _selectedEvent["EventId"].Text;
 
-
-
-
             List<string[]> _parameters = new List<string[]>();
             _parameters.Add(new string[] { "@TaskCreator", User.Identity.Name.ToUpper() });
             _parameters.Add(new string[] { "@TaskTeam", Task_Subteams.SelectedValue });
@@ -217,8 +219,8 @@ namespace MM_Events
             _parameters.Add(new string[] { "@TaskDueDate",  (Task_DueDate.SelectedDate.Value).ToString("yyyy.MM.dd")  });
             _parameters.Add(new string[] { "@TaskDCreated", (DateTime.Today).ToString("yyyy.MM.dd") });//"GETDATE()" });
             _parameters.Add(new string[] { "@TaskStatus", "NEWTASK" });
-            _parameters.Add(new string[] { "@TaskName", "NEWTASK" });
-            _parameters.Add(new string[] { "@TaskDescr", "NEWTASK" });
+            _parameters.Add(new string[] { "@TaskName", Task_Name.Text });
+            _parameters.Add(new string[] { "@TaskDescr", Task_Descr.Text });
             string _createTaskQuery = "insert into [Task] ([TaskCreator], [TaskTeam], [TaskEventId], [TaskBudget], [TaskDueDate], [TaskDCreated], [TaskStatus], [TaskName], [TaskDescr]) " +
                 " values (@TaskCreator, @TaskTeam, @TaskEventId, @TaskBudget, @TaskDueDate, @TaskDCreated, @TaskStatus, @TaskName, @TaskDescr)";
 
@@ -280,8 +282,9 @@ namespace MM_Events
 
         protected void RequestEvent_Forward_Click(object sender, EventArgs e)
         {
+            Event_Request_Control.SubmitRequest(Convert.ToInt32(RequestEvent_EventId.Text));
+
             InterfaceByUser();
-        
         }
 
 

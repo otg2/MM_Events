@@ -6,9 +6,9 @@ using System.Web;
 
 namespace MM_Events.Controls
 {
-    public class Event_Request_Control 
+    public static class Event_Request_Control 
     {
-        public void SubmitRequest(int requestId)
+        public static void SubmitRequest(int requestId)
         {
             var _request = GetRequestForId(requestId);
 
@@ -21,38 +21,38 @@ namespace MM_Events.Controls
             }
         }
 
-        private void HandleAcceptRequest(int requestId)
+        private static void HandleAcceptRequest(int requestId)
         {
             AcceptEvent(requestId);
             CloseEventRequest(requestId);
         }
 
-        private void CloseEventRequest(int requestId)
+        private static void CloseEventRequest(int requestId)
         {
             Data_Utilities.setEventRequestToClosed(requestId);
         }
 
-        private void AcceptEvent(int requestId)
+        private static void AcceptEvent(int requestId)
         {
             Data_Utilities.setEventStatusToAccepted(requestId);
         }
 
-        private bool ShouldAccept(DataRow request)
+        private static bool ShouldAccept(DataRow request)
         {
             return request["ReqResp"] == "SCS" && request["ReqStatus"] == "APPROVED";
         }
 
-        private void SetResponsibleForRequest(int requestId, string sendTo)
+        private static void SetResponsibleForRequest(int requestId, string sendTo)
         {
             Data_Utilities.setResponsibleForRequest(requestId, sendTo);
         }
 
-        private DataRow GetRequestForId(int requestId)
+        private static DataRow GetRequestForId(int requestId)
         {
             return Data_Utilities.getRequest(requestId);
         }
 
-        private string GetNextReceiver(string responsible)
+        private static string GetNextReceiver(string responsible)
         {
             switch (responsible)
             {
