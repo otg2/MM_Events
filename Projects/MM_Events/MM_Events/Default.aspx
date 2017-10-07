@@ -154,27 +154,27 @@
                         <h2>Task</h2>
                         <div>
                             <div>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Name"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Name" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Descr"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Descr" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                         </div>
                         <div>
                             <div>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_CreatedInfo"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_CreatedInfo" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div>
-                                <telerik:RadButton runat="server" ID="ViewTask_OpenEventInformation" 
+                                <telerik:RadButton runat="server" ID="ViewTask_OpenEventInformation" RenderMode="Lightweight"
                                     Text="View event" AutoPostBack="false" OnClientClicked="OpenEventFromTask"></telerik:RadButton>
                             </div>
                         </div>
                         <div>
                             <div>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Budget"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div>
-                                <telerik:RadNumericTextBox runat="server" ID="ViewTask_ExtraBudget" MinValue="0"></telerik:RadNumericTextBox>
+                                <telerik:RadNumericTextBox runat="server" ID="ViewTask_ExtraBudget" MinValue="0" RenderMode="Lightweight"></telerik:RadNumericTextBox>
                             </div>
                         </div>
                         <div>
@@ -182,7 +182,7 @@
                                 EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                         </div>
                         <div>
-                            <telerik:RadButton runat="server" ID="ViewTask_Accept"></telerik:RadButton>
+                            <telerik:RadButton runat="server" ID="ViewTask_Accept" RenderMode="Lightweight"></telerik:RadButton>
                         </div>
                     </div>
                 </ContentTemplate>

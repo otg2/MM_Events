@@ -14,6 +14,8 @@ namespace MM_Events.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Password.Text = "hallo1";
+
             RegisterHyperLink.NavigateUrl = "Register";
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);

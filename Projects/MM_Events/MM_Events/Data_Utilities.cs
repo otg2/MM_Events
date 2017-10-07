@@ -98,7 +98,7 @@ public static class Data_Utilities
             _command.ExecuteNonQuery();
 
 
-            }
+        }
     }
 
 
@@ -138,11 +138,11 @@ public static class Data_Utilities
             new string[] { "@ReqId", requestId.ToString() }
         };
 
-        var query = "UPDATE Events";
-        query += "SET EventStatus = 'APPROVED'";
-        query += "WHERE EventId = (SELECT ReqTaskId";
-        query += "FROM Request";
-        query += "WHERE ReqId = @ReqId)";
+        var query = "UPDATE Events ";
+        query += "SET EventStatus = 'APPROVED' ";
+        query += "WHERE EventId = (SELECT ReqTaskId ";
+        query += "FROM Request ";
+        query += "WHERE ReqId = @ReqId) ";
 
         ModifyDataBase_Parameters(query, _parameters);
     }
@@ -154,8 +154,8 @@ public static class Data_Utilities
             new string[] { "@ReqId", requestId.ToString() }
         };
 
-        var query = "UPDATE Request";
-        query += "SET ReqStatus = 'CLOSED'";
+        var query = "UPDATE Request ";
+        query += "SET ReqStatus = 'CLOSED' ";
         query += "WHERE ReqId = @ReqId";
 
         ModifyDataBase_Parameters(query, _parameters);
@@ -169,10 +169,10 @@ public static class Data_Utilities
             new string[] { "@FinancialComment", financialComment }
         };
 
-        var query = "UPDATE Events";
-        query += "SET FinancialComment = @FinancialComment";
-        query += "WHERE EventId = (SELECT ReqTaskId";
-        query += "FROM Request";
+        var query = "UPDATE Events ";
+        query += "SET FinancialComment = @FinancialComment ";
+        query += "WHERE EventId = (SELECT ReqTaskId ";
+        query += "FROM Request ";
         query += "WHERE ReqId = @ReqId)";
 
         ModifyDataBase_Parameters(query, _parameters);
@@ -185,11 +185,11 @@ public static class Data_Utilities
             new string[] { "@ReqId", requestId.ToString() },
         };
 
-        var query = "UPDATE Events";
-        query += "SET EventStatus = 'READY'";
-        query += "WHERE EventId = (SELECT ReqTaskId";
-        query += "FROM Request";
-        query += "WHERE ReqId = @ReqId)";
+        var query = "UPDATE Events ";
+        query += "SET EventStatus = 'READY' ";
+        query += "WHERE EventId = (SELECT ReqTaskId ";
+        query += "FROM Request ";
+        query += "WHERE ReqId = @ReqId )";
 
         ModifyDataBase_Parameters(query, _parameters);
     }

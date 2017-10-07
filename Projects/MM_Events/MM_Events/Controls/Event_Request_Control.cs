@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MM_Events.Controls
 {
-    public static class Event_Request_Control 
+    public static class Event_Request_Control
     {
         public static void SubmitRequest(int requestId)
         {
@@ -17,8 +17,30 @@ namespace MM_Events.Controls
             else
             {
                 var _sendTo = GetNextReceiver(_request["ReqResp"] as string);
+
+                if (_sendTo == "SCS")
+                {
+                    PrepareEvent(requestId);
+                }
+
                 SetResponsibleForRequest(requestId, _sendTo);
             }
+        }
+
+        private static void PrepareEvent(int requestId)
+        {
+            Data_Utilities.SetEventStatusToReady(requestId);
+        }
+
+        public static void SubmitRequest(int requestId, string financialComment)
+        {
+            SubmitRequest(requestId);
+            SaveFinancialComment(requestId, financialComment);
+        }
+
+        private static void SaveFinancialComment(int requestId, string financialComment)
+        {
+            Data_Utilities.SaveFinancialComment(requestId, financialComment);
         }
 
         private static void HandleAcceptRequest(int requestId)
@@ -39,7 +61,13 @@ namespace MM_Events.Controls
 
         private static bool ShouldAccept(DataRow request)
         {
-            return request["ReqResp"] == "SCS" && request["ReqStatus"] == "APPROVED";
+            var responsible = request["ReqResp"] as string;
+            var status = request["ReqStatus"] as string;
+
+            if (responsible == null || status == null)
+                throw new NoNullAllowedException("Either person responsible or request status is null");
+
+            return (string)request["ReqResp"] == "SCS" && (string)request["ReqStatus"] == "APPROVED";
         }
 
         private static void SetResponsibleForRequest(int requestId, string sendTo)
@@ -56,8 +84,6 @@ namespace MM_Events.Controls
         {
             switch (responsible)
             {
-                case "CS":
-                    return "SCS";
                 case "SCS":
                     return "FM";
                 case "FM":

@@ -51,8 +51,6 @@ namespace MM_Events
 
                     InterfaceByUser();
 
-                    
-
                     //Data_Utilities.ModifyDataBase_Parameters("insert into [Table] ([RoleId], [RoleName]) values (@ROLEID, @ROLENAME)", _parameters);
                 }
                 else
@@ -124,7 +122,7 @@ namespace MM_Events
         {
             RadGrid _sender = (RadGrid)sender;
 
-            _sender.DataSource = Data_Utilities.getSQLDataByQuery("select * from [Events] where EventStatus in('APPROVED','PENDING_REPORT')");
+            _sender.DataSource = Data_Utilities.getSQLDataByQuery("select * from [Events] where [EventStatus] in('APPROVED','PENDING_REPORT')");
         }
 
 
