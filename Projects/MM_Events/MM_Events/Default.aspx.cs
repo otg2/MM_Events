@@ -157,7 +157,7 @@ namespace MM_Events
                     RequestEvent_Descr.Text = _eventInfo.Rows[0]["EventDescr"].ToString();
                     RequestEvent_From.Text = _eventInfo.Rows[0]["EventFrom"].ToString();
                     RequestEvent_To.Text = _eventInfo.Rows[0]["EventTo"].ToString();
-                    RequestEvent_Comment.Text = _eventInfo.Rows[0]["EventComment"].ToString();
+                    RequestEvent_Comment.Text = _eventInfo.Rows[0]["FinancialComment"].ToString();
                     RequestEvent_Budget.Text = _eventInfo.Rows[0]["EventBudget"].ToString();
                     RequestEvent_Guests.Text = _eventInfo.Rows[0]["EventGuests"].ToString();
                     RequestEvent_Type.Text = _eventInfo.Rows[0]["EventType"].ToString();
@@ -260,7 +260,7 @@ namespace MM_Events
             string _getNewEventId = Data_Utilities.getSQLDataByQuery("select max(EventId) from [Events]").Rows[0][0].ToString();
 
             _parameters.Clear();
-            _parameters.Add(new string[] { "@ReqType", "NEW_EVENT_REQUEST" });
+            _parameters.Add(new string[] { "@ReqType", "EVENT" });
             _parameters.Add(new string[] { "@ReqResp", "SCS" });
             _parameters.Add(new string[] { "@ReqDescr", _description });
             _parameters.Add(new string[] { "@ReqDate", (DateTime.Today).ToString("yyyy.MM.dd") });

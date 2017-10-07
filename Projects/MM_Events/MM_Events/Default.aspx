@@ -400,8 +400,8 @@
                     <telerik:GridBoundColumn DataField="EventTo" ReadOnly="true" Display="true" HeaderText="Event To"
                             UniqueName="EventTo">
                     </telerik:GridBoundColumn>
-                    <telerik:GridBoundColumn DataField="EventComment" ReadOnly="true" Display="true" HeaderText="Event Comment"
-                            UniqueName="EventComment">
+                    <telerik:GridBoundColumn DataField="FinancialEvent" ReadOnly="true" Display="true" HeaderText="Financial Comment"
+                            UniqueName="FinancialEvent">
                     </telerik:GridBoundColumn>
                     <telerik:GridBoundColumn DataField="EventBudget" ReadOnly="true" Display="true" HeaderText="Event Budget"
                             UniqueName="EventBudget">

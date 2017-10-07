@@ -39,7 +39,7 @@ public static class Data_Utilities
     }
 
     // Returns a gridview based on query and connection string
-    
+
 
 
     // Same as above, but works for SQL databases
@@ -157,6 +157,39 @@ public static class Data_Utilities
         var query = "UPDATE Request";
         query += "SET ReqStatus = 'CLOSED'";
         query += "WHERE ReqId = @ReqId";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static void SaveFinancialComment(int requestId, string financialComment)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() },
+            new string[] { "@FinancialComment", financialComment }
+        };
+
+        var query = "UPDATE Events";
+        query += "SET FinancialComment = @FinancialComment";
+        query += "WHERE EventId = (SELECT ReqTaskId";
+        query += "FROM Request";
+        query += "WHERE ReqId = @ReqId)";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static void SetEventStatusToReady(int requestId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() },
+        };
+
+        var query = "UPDATE Events";
+        query += "SET EventStatus = 'READY'";
+        query += "WHERE EventId = (SELECT ReqTaskId";
+        query += "FROM Request";
+        query += "WHERE ReqId = @ReqId)";
 
         ModifyDataBase_Parameters(query, _parameters);
     }
