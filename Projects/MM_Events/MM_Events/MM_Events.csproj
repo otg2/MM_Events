@@ -322,7 +322,8 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Event_Request_Control.cs" />
+    <Compile Include="Controls\EventRequestControl.cs" />
+    <Compile Include="Controls\TaskControl.cs" />
     <Compile Include="Data_Utilities.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

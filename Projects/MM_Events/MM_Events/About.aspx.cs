@@ -15,27 +15,10 @@ namespace MM_Events
         {
             if(!Page.IsPostBack)
             {
-                debug.Text = User.Identity.Name.ToString() + "_" + User.Identity.ToString() + "_" + User.Identity.AuthenticationType.ToString();
                 //BindUsersToUserList();
                 //BindRolesToList();
                 
             }
-        }
-
-        private void BindUsersToUserList()
-        {
-            // Get all of the user accounts 
-            MembershipUserCollection users = Membership.GetAllUsers();
-            LookForUsers.DataSource = users;
-            LookForUsers.DataBind();
-        }
-
-        private void BindRolesToList()
-        {
-            // Get all of the roles 
-            string[] roles = Roles.GetAllRoles();
-            LookForRoles.DataSource = roles;
-            LookForRoles.DataBind();
         }
 
     }

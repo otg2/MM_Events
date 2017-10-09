@@ -9,9 +9,6 @@
     
     <asp:Label runat="server" ID="debug"></asp:Label>
 
-    <telerik:RadDropDownList runat="server" ID="LookForUsers" DataTextField="UserName" DataValueField="UserName"></telerik:RadDropDownList>
-
-    <telerik:RadDropDownList runat="server" ID="LookForRoles" DataTextField="RoleName" DataValueField="RoleName"></telerik:RadDropDownList>
 
     <telerik:radbutton runat="server" id="test" Text="Gurkfdfd" RenderMode="Lightweight" >
         <Icon PrimaryIconRight="5px" PrimaryIconCssClass="rbAdd" />

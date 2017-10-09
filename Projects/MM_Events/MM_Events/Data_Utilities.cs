@@ -24,7 +24,6 @@ public static class Data_Utilities
         return !String.IsNullOrEmpty(aValue) ? aValue : DBNull.Value.ToString();
     }
 
-
     // We got similar functions in utilities
     //Concate multiple strings with a . in between each one
     public static string CombineElements(string[] anArray)
@@ -101,14 +100,12 @@ public static class Data_Utilities
         }
     }
 
-
-
     // Used to modify the body content of emails.
     // Turns all image snapshots to alternitive view, so they can be sent in email
     // If the image is c/p from computer (which the control cannot handle) a "error" image is used
 
     //Used to fetch a task for a given id
-    public static DataRow getRequest(int id)
+    public static DataRow GetRequest(int id)
     {
         var _parameters = new List<string[]>
         {
@@ -120,7 +117,7 @@ public static class Data_Utilities
         return _table.Rows[0];
     }
 
-    public static void setResponsibleForRequest(int requestId, string sendTo)
+    public static void SetResponsibleForRequest(int requestId, string sendTo)
     {
         var _parameters = new List<string[]>
         {
@@ -156,7 +153,7 @@ public static class Data_Utilities
 
         var query = "UPDATE Request ";
         query += "SET ReqStatus = 'CLOSED' ";
-        query += "WHERE ReqId = @ReqId";
+        query += "WHERE ReqId = @ReqId ";
 
         ModifyDataBase_Parameters(query, _parameters);
     }
@@ -173,7 +170,7 @@ public static class Data_Utilities
         query += "SET FinancialComment = @FinancialComment ";
         query += "WHERE EventId = (SELECT ReqTaskId ";
         query += "FROM Request ";
-        query += "WHERE ReqId = @ReqId)";
+        query += "WHERE ReqId = @ReqId) ";
 
         ModifyDataBase_Parameters(query, _parameters);
     }
@@ -185,11 +182,83 @@ public static class Data_Utilities
             new string[] { "@ReqId", requestId.ToString() },
         };
 
+        var query = "UPDATE Request ";
+        query += "SET ReqStatus = 'READY' ";
+        query += "WHERE ReqId = @ReqId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static void SaveFinancialBudget(int requestId, decimal budget)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() },
+            new string[] { "@FinancialBudget", budget.ToString() }
+        };
+
         var query = "UPDATE Events ";
-        query += "SET EventStatus = 'READY' ";
+        query += "SET EventBudget = @FinancialBudget ";
         query += "WHERE EventId = (SELECT ReqTaskId ";
         query += "FROM Request ";
-        query += "WHERE ReqId = @ReqId )";
+        query += "WHERE ReqId = @ReqId) ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static void CancelEvent(int requestId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() }
+        };
+
+        var query = "UPDATE Events ";
+        query += "SET EventStatus = 'CLOSED' ";
+        query += "WHERE EventId = (SELECT ReqTaskId ";
+        query += "FROM Request ";
+        query += "WHERE ReqId = @ReqId) ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static DataRow GetTask(int taskId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskID", taskId.ToString()}
+        };
+
+        DataTable _table = getSQLDataByQuery_Parameters("SELECT * FROM Task WHERE TaskId = @TaskId", _parameters);
+
+        return _table.Rows[0];
+    }
+
+    public static void SetTaskStatus(int taskId, string nextStatus)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+            new string[] { "@TaskStatus", nextStatus}
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskStatus = @TaskStatus ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    public static void CloseTask(int taskId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskStatus = 'CLOSED' ";
+        query += "WHERE TaskId = @TaskId ";
 
         ModifyDataBase_Parameters(query, _parameters);
     }
