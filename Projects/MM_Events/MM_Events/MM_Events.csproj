@@ -323,6 +323,8 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controls\EventRequestControl.cs" />
+    <Compile Include="Controls\FinancialRequestControl.cs" />
+    <Compile Include="Controls\OutsourceRequestControl.cs" />
     <Compile Include="Controls\TaskControl.cs" />
     <Compile Include="Data_Utilities.cs" />
     <Compile Include="Default.aspx.cs">

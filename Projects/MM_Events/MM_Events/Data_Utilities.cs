@@ -322,4 +322,37 @@ public static class Data_Utilities
 
         ModifyDataBase_Parameters(query, _parameters);
     }
+
+    internal static DataRow GetTaskForRequest(int requestId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@RequestId", requestId.ToString()}
+        };
+
+        var query = "SELECT * ";
+        query += "FROM Task ";
+        query += "WHERE TaskId = (SELECT ReqTaskId ";
+        query += "FROM Request ";
+        query += "WHERE ReqId = @RequestId)";
+
+        DataTable _table = getSQLDataByQuery_Parameters("SELECT * FROM Task WHERE TaskId = @TaskId", _parameters);
+
+        return _table.Rows[0];
+    }
+
+    internal static void SetRequestStatus(int requestId, string status)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@ReqId", requestId.ToString() },
+            new string[] { "@ReqStatus", status }
+        };
+
+        var query = "UPDATE Request ";
+        query += "SET TaskBudget = @TaskBudget ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
 }
