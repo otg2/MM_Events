@@ -29,7 +29,7 @@
 
             function openTaskForm(sender, args) {
                 var _taskId = sender.get_value();
-
+                console.log(_taskId);
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Task;" + _taskId);
                 openModalWindow($find('<%= Window_ViewTask.ClientID %>'), 0.5, 0.5);
             }
@@ -135,9 +135,21 @@
                     <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Original" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Extra" LoadingPanelID="LoadingPanel1" />
 
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Name" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Subteam" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Descr" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Regarding" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_ViewEvent" LoadingPanelID="LoadingPanel1" />
+                    
+
                 </UpdatedControls>
             </telerik:AjaxSetting>
-
+            
+            <telerik:AjaxSetting AjaxControlID="ViewTask_Accept">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedTasks" LoadingPanelID="LoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="Radgrid_Events">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Radgrid_Events" LoadingPanelID="LoadingPanel1" />
@@ -199,8 +211,10 @@
                         <h1>Financial request</h1>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Event_Label" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Event" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <div style="float:left">
+                                    <telerik:RadLabel runat="server" ID="FinanceRequest_Event_Label" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" ID="FinanceRequest_Event" RenderMode="Lightweight"></telerik:RadTextBox>
+                                </div>
                                 <div style="float:left; margin:5px 10px">
                                     <telerik:RadButton runat="server" ID="FinanceRequest_ViewEvent" RenderMode="Lightweight" Skin="Simple"
                                         Text="View event" AutoPostBack="false" OnClientClicked="OpenEventFromTask">
@@ -254,6 +268,20 @@
                         <h1>Outsource request</h1>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
+                                <div style="float:left">
+                                    <telerik:RadLabel runat="server" ID="RadLabel4" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" ID="OutsourceRequest_Regarding" RenderMode="Lightweight"></telerik:RadTextBox>
+                                </div>
+                                <div style="float:left; margin:5px 10px">
+                                    <telerik:RadButton runat="server" ID="OutsourceRequest_ViewEvent" RenderMode="Lightweight" Skin="Simple"
+                                        Text="View event" AutoPostBack="false" OnClientClicked="OpenEventFromTask">
+                                        <Icon SecondaryIconCssClass="rbOpen" SecondaryIconRight="5px" />
+                                    </telerik:RadButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin:5%; clear:both">
+                            <div style="float:left; margin:5px 10px">
                                 <telerik:RadLabel runat="server" ID="RadLabel1" Text="Title" Font-Bold="true"></telerik:RadLabel>
                                 <telerik:RadTextBox runat="server" ID="OutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
@@ -285,7 +313,11 @@
                         </div>
                         
                         <div style="margin:5%; clear:both">
-                            <telerik:RadButton runat="server" ID="OutsourceRequest_Send" RenderMode="Lightweight" Text="Send outsource request" 
+                            <telerik:RadButton runat="server" ID="OutsourceRequest_Reject" RenderMode="Lightweight" Text="Reject request" Skin="Sunset"
+                                OnClick="OutsourceRequest_Send_Click">
+                                <Icon SecondaryIconCssClass="rbCancel" SecondaryIconRight="5px" />
+                            </telerik:RadButton>
+                            <telerik:RadButton runat="server" ID="OutsourceRequest_Accept" RenderMode="Lightweight" Text="Approve outsource request" Skin="Telerik"
                                 OnClick="OutsourceRequest_Send_Click">
                                 <Icon SecondaryIconCssClass="rbOk" SecondaryIconRight="5px" />
                             </telerik:RadButton>
@@ -331,19 +363,19 @@
                                 <telerik:RadTextBox runat="server" ID="ViewTask_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraBudget_Label" Text="Extra budget (if needed)" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraBudget_Label" Text="Needed budget (if needed)" Font-Bold="true"></telerik:RadLabel>
                                 <telerik:RadNumericTextBox runat="server" ID="ViewTask_ExtraBudget" MinValue="0" RenderMode="Lightweight"></telerik:RadNumericTextBox>
                             </div>
                         </div>
                         <div style="margin:5%;clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraComment_Label" Text="Reason for extra budget" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraComment_Label" Text="Reason for needed budget" Font-Bold="true"></telerik:RadLabel>
                                 <telerik:RadTextBox runat="server" ID="ViewTask_ExtraComment" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
                                     EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
                         </div>
                         <div style="margin:5%; clear:both">
-                            <telerik:RadButton runat="server" ID="ViewTask_Accept" RenderMode="Lightweight" Text="Send Task Accept" Skin="Telerik"
+                            <telerik:RadButton runat="server" ID="ViewTask_Accept" RenderMode="Lightweight" Skin="Telerik"
                                 OnClick="ViewTask_Accept_Click">
                                 <Icon SecondaryIconCssClass="rbOk" SecondaryIconRight="5px" />
                             </telerik:RadButton>

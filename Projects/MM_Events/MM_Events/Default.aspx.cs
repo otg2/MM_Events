@@ -100,15 +100,18 @@ namespace MM_Events
             {
                 for (int i = 0; i < _taskTable.Rows.Count; i++)
                 {
+                    string _status = _taskTable.Rows[i]["TaskStatus"].ToString();
+
                     RadButton _generatedTask_Button = new RadButton();
                     _generatedTask_Button.RenderMode = RenderMode.Lightweight;
-                    _generatedTask_Button.Text = _taskTable.Rows[i]["TaskName"].ToString() + " | " 
-                        + (DateTime.Parse(_taskTable.Rows[i]["TaskDueDate"].ToString())).ToString("yyyy.MM.dd");
+                    _generatedTask_Button.Text = _taskTable.Rows[i]["TaskName"].ToString() + " | "
+                        + (DateTime.Parse(_taskTable.Rows[i]["TaskDueDate"].ToString())).ToString("yyyy.MM.dd") + " | " + _status;
                     _generatedTask_Button.Value = _taskTable.Rows[i]["TaskId"].ToString();
                     _generatedTask_Button.AutoPostBack = false;
                     _generatedTask_Button.Width = 350;
                     _generatedTask_Button.Style.Add("margin", "10px 0px");
                     _generatedTask_Button.OnClientClicked = "openTaskForm";
+                    _generatedTask_Button.Skin = _status == "IN PROGRESS" ? "Sunset" : "Metro";
                     Div_GeneratedTasks.Controls.Add(_generatedTask_Button);
                 }
             }
@@ -121,14 +124,19 @@ namespace MM_Events
             {
                 for(int i = 0 ; i < _requestTable.Rows.Count; i++)
                 {
-                    string _eventName = Data_Utilities.getSQLDataByQuery("select EventName from [Events] where EventId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
-                    string _reqType =  _requestTable.Rows[i]["ReqType"].ToString();
+                    string _reqType = _requestTable.Rows[i]["ReqType"].ToString();
+                    string _displayName;
+                    if (_reqType == "EVENT" || _reqType == "OUTSOURCE")
+                        _displayName = Data_Utilities.getSQLDataByQuery("select EventName from [Events] where EventId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
+                    else
+                        _displayName = Data_Utilities.getSQLDataByQuery("select TaskName from [Task] where TaskId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
+
 
                     RadButton _generatedRequest_Button = new RadButton();
                     _generatedRequest_Button.RenderMode = RenderMode.Lightweight;
-                    _generatedRequest_Button.Text = _eventName + " | " + _requestTable.Rows[i]["ReqType"].ToString() + " | " 
+                    _generatedRequest_Button.Text = _displayName + " | " + _requestTable.Rows[i]["ReqType"].ToString() + " | " 
                         + (DateTime.Parse(_requestTable.Rows[i]["ReqDate"].ToString())).ToString("yyyy.MM.dd");
-                    _generatedRequest_Button.Value = _requestTable.Rows[i]["ReqTaskId"].ToString();
+                    _generatedRequest_Button.Value = _requestTable.Rows[i]["ReqId"].ToString(); // var reqtaskid
                     _generatedRequest_Button.AutoPostBack = false;
                     _generatedRequest_Button.Width = 350;
                     _generatedRequest_Button.Style.Add("margin","10px 0px");
@@ -164,8 +172,12 @@ namespace MM_Events
                 if (_arguments[0] == "init_Task")
                 {
 
+                   // List<string[]> _reqParamenter = new List<string[]>();
+                   // _reqParamenter.Add(new string[] { "@reqId", _arguments[1].Trim() });
+                   // DataTable _reqInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Requests] where [ReqId]=@ReqId", _reqParamenter);
+
                     List<string[]> _taskParamenter = new List<string[]>();
-                    _taskParamenter.Add(new string[] { "@TaskId", _arguments[1].Trim() });
+                    _taskParamenter.Add(new string[] { "@TaskId", _arguments[1].Trim() });// _reqInfo.Rows[0]["ReqTaskId"].ToString() });
                     DataTable _taskInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Task] where [TaskId]=@TaskId", _taskParamenter);
 
                     ViewTask_Name.Text = _taskInfo.Rows[0]["TaskName"].ToString();
@@ -184,17 +196,41 @@ namespace MM_Events
                         }
                     }
 
-                    ViewTask_Budget.Text = _taskInfo.Rows[0]["TaskBudget"].ToString();
-                    ViewTask_ExtraBudget.Value = 0;
-                    ViewTask_ExtraComment.Text = "";
+                    string _extraBudget = _taskInfo.Rows[0]["TaskExtraBudget"].ToString();
+                    double _extraAsDouble = !String.IsNullOrEmpty(_taskInfo.Rows[0]["TaskExtraBudget"].ToString()) ? Convert.ToDouble(_taskInfo.Rows[0]["TaskExtraBudget"].ToString()) : 0;
 
-                    ViewTask_Accept.Value = _arguments[1].Trim();
+                    ViewTask_Budget.Text = _taskInfo.Rows[0]["TaskBudget"].ToString();
+                    ViewTask_ExtraBudget.Value = _extraAsDouble;
+                    ViewTask_ExtraComment.Text = _taskInfo.Rows[0]["TaskExtraComment"].ToString();
+
+                    string _taskStatus = _taskInfo.Rows[0]["TaskStatus"].ToString();
+                   
+
+                    if (_taskStatus == "PENDING FINANCIAL REQUEST")
+                    {
+                        ViewTask_Accept.Text = "Send financial request";
+                        ViewTask_Accept.Value = _arguments[1].Trim();
+                        ViewTask_Accept.CommandName = "FINANCIAL";
+                    }
+                    else if (_taskStatus == "IN PROGRESS")
+                    {
+                        ViewTask_Accept.Text = "Mark task finished";
+                        ViewTask_Accept.Value = _arguments[1].Trim();
+                        ViewTask_Accept.CommandName = "CLOSE";
+                    }
+                    else if (_taskStatus == "PENDING")
+                    {
+                        ViewTask_Accept.Text = "Send task accept";
+                        ViewTask_Accept.Value = _arguments[1].Trim();
+                        ViewTask_Accept.CommandName = "PENDING";
+                    }
 
                 }
                 if (_arguments[0] == "init_Request")
                 {
                     List<string[]> _eventParamenter = new List<string[]>();
                     _eventParamenter.Add(new string[] { "@EventId", _arguments[1].Trim() });
+
                     DataTable _eventInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Events] where [EventId]=@EventId", _eventParamenter);
                     DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqTaskId]=@EventId and [ReqType]='EVENT'", _eventParamenter);
 
@@ -242,22 +278,63 @@ namespace MM_Events
                 }
                 if (_arguments[0] == "init_RequestFinance")
                 {
-                    List<string[]> _eventParamenter = new List<string[]>();
-                    _eventParamenter.Add(new string[] { "@EventId", _arguments[1].Trim() });
-                    DataTable _eventInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Events] where [EventId]=@EventId", _eventParamenter);
-                    DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqTaskId]=@EventId and [ReqType]='FINANCE'", _eventParamenter);
+                    List<string[]> _reqParamenter = new List<string[]>();
+                    _reqParamenter.Add(new string[] { "@ReqId", _arguments[1].Trim() });
+                    DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqId]=@ReqId ", _reqParamenter);
 
-                    FinanceRequest_Event.Text = "";
-                    FinanceRequest_ViewEvent.Value = "5";
-                    FinanceRequest_Name.Text = "giur";
-                    FinanceRequest_Department.Text = "giur";
-                    FinanceRequest_Descr.Text = "giur";
-                    FinanceRequest_Original.Value = 5;
-                    FinanceRequest_Extra.Value = 5;
+                    List<string[]> _taskParamenter = new List<string[]>();
+                    _taskParamenter.Add(new string[] { "@TaskId", _requestInfo.Rows[0]["ReqTaskId"].ToString() });
+                    DataTable _taskInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Task] where [TaskId]=@TaskId ", _taskParamenter);
+                    
+                    List<string[]> _eventParamenter = new List<string[]>();
+                    _eventParamenter.Add(new string[] { "@EventId", _taskInfo.Rows[0]["TaskEventId"].ToString() });
+                    DataTable _eventInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Events] where [EventId]=@EventId", _eventParamenter);
+
+                    foreach (GridDataItem item in Radgrid_Events.MasterTableView.Items)
+                    {
+                        if (item["EventId"].Text == _taskInfo.Rows[0]["TaskEventId"].ToString())
+                        {
+                            item.Selected = true;
+                        }
+                    }
+
+                    FinanceRequest_Event.Text = _eventInfo.Rows[0]["EventName"].ToString();
+                    FinanceRequest_ViewEvent.Value = _taskInfo.Rows[0]["TaskEventId"].ToString();
+                    FinanceRequest_Name.Text =  _taskInfo.Rows[0]["TaskName"].ToString();
+                    FinanceRequest_Department.Text =  _taskInfo.Rows[0]["TaskStatusMsg"].ToString();
+                    FinanceRequest_Descr.Text = _taskInfo.Rows[0]["TaskExtraComment"].ToString() + " | " + _taskInfo.Rows[0]["TaskDescr"].ToString();
+                    FinanceRequest_Original.Text = _taskInfo.Rows[0]["TaskBudget"].ToString();
+                    FinanceRequest_Extra.Text = _taskInfo.Rows[0]["TaskExtraBudget"].ToString();
+
                 }
                 if (_arguments[0] == "init_RequestOutsource")
                 {
+                    List<string[]> _reqParamenter = new List<string[]>();
+                    _reqParamenter.Add(new string[] { "@ReqId", _arguments[1].Trim() });
+                    DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqId]=@ReqId ", _reqParamenter);
 
+                    //List<string[]> _taskParamenter = new List<string[]>();
+                    //_taskParamenter.Add(new string[] { "@TaskId", _requestInfo.Rows[0]["ReqTaskId"].ToString() });
+                    //DataTable _taskInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Task] where [TaskId]=@TaskId ", _taskParamenter);
+                    
+                    List<string[]> _eventParamenter = new List<string[]>();
+                    _eventParamenter.Add(new string[] { "@EventId", _requestInfo.Rows[0]["ReqTaskId"].ToString() });
+                    DataTable _eventInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Events] where [EventId]=@EventId", _eventParamenter);
+
+                    foreach (GridDataItem item in Radgrid_Events.MasterTableView.Items)
+                    {
+                        if (item["EventId"].Text == _requestInfo.Rows[0]["ReqTaskId"].ToString())
+                        {
+                            item.Selected = true;
+                        }
+                    }
+
+                    OutsourceRequest_Name.Text = "NAME OF REQUEST";// _taskInfo.Rows[0]["TaskName"].ToString();
+                    OutsourceRequest_Subteam.SelectedValue = "CHEF";// _taskInfo.Rows[0]["TaskStatusMsg"].ToString();
+                    OutsourceRequest_Descr.Text = _requestInfo.Rows[0]["ReqDescr"].ToString();
+
+                    OutsourceRequest_Regarding.Text = _eventInfo.Rows[0]["EventName"].ToString();
+                    OutsourceRequest_ViewEvent.Value = _eventInfo.Rows[0]["EventId"].ToString();
                 }
             }
 
@@ -294,6 +371,7 @@ namespace MM_Events
             List<string[]> _parameters = new List<string[]>();
             _parameters.Add(new string[] { "@TaskCreator", User.Identity.Name.ToUpper() });
             _parameters.Add(new string[] { "@TaskTeam", Task_Subteams.SelectedValue });
+            _parameters.Add(new string[] { "@TaskStatusMsg", Task_Subteams.SelectedValue });
             _parameters.Add(new string[] { "@TaskEventId", _eventId });
             _parameters.Add(new string[] { "@TaskBudget", Task_Budget.Value.ToString() });
             _parameters.Add(new string[] { "@TaskDueDate",  (Task_DueDate.SelectedDate.Value).ToString("yyyy.MM.dd")  });
@@ -301,15 +379,15 @@ namespace MM_Events
             _parameters.Add(new string[] { "@TaskStatus", "PENDING" });
             _parameters.Add(new string[] { "@TaskName", Task_Name.Text });
             _parameters.Add(new string[] { "@TaskDescr", Task_Descr.Text });
-            string _createTaskQuery = "insert into [Task] ([TaskCreator], [TaskTeam], [TaskEventId], [TaskBudget], [TaskDueDate], [TaskDCreated], [TaskStatus], [TaskName], [TaskDescr]) " +
-                " values (@TaskCreator, @TaskTeam, @TaskEventId, @TaskBudget, @TaskDueDate, @TaskDCreated, @TaskStatus, @TaskName, @TaskDescr)";
+            string _createTaskQuery = "insert into [Task] ([TaskCreator], [TaskTeam], [TaskStatusMsg], [TaskEventId], [TaskBudget], [TaskDueDate], [TaskDCreated], [TaskStatus], [TaskName], [TaskDescr]) " +
+                " values (@TaskCreator, @TaskTeam, @TaskStatusMsg, @TaskEventId, @TaskBudget, @TaskDueDate, @TaskDCreated, @TaskStatus, @TaskName, @TaskDescr)";
 
 
             Data_Utilities.ModifyDataBase_Parameters(_createTaskQuery, _parameters);
 
             Task_Name.Text = "";
             Task_Descr.Text= "";
-            Task_Subteams.SelectedIndex = 0;
+            Task_Subteams.ClearSelection();
             Task_DueDate.SelectedDate = null;
             Task_Budget.Value = 0;
            //Task_DueDate.
@@ -364,8 +442,6 @@ namespace MM_Events
 
         protected void RequestEvent_Forward_Click(object sender, EventArgs e)
         {
-            
-
             if(RequestEvent_FM_Budget.ReadOnly)
                 EventRequestControl.SubmitRequest(Convert.ToInt32(RequestEvent_EventId.Text));
             else
@@ -388,7 +464,32 @@ namespace MM_Events
         protected void ViewTask_Accept_Click(object sender, EventArgs e)
         {
             RadButton _sender = (RadButton)sender;
-            TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
+            if (_sender.CommandName == "FINANCIAL")
+            {
+                List<string[]> _parameters = new List<string[]>();
+                _parameters.Add(new string[] { "@ReqType", "FINANCE" });
+                _parameters.Add(new string[] { "@ReqResp", "FM" });
+                _parameters.Add(new string[] { "@ReqDescr", ""});
+                _parameters.Add(new string[] { "@ReqDate", (DateTime.Today).ToString("yyyy.MM.dd") });
+                _parameters.Add(new string[] { "@ReqTaskId", _sender.Value });
+                _parameters.Add(new string[] { "@ReqStatus", "OPEN" });
+                _parameters.Add(new string[] { "@ReqBudget", "" });
+
+                string _createRequestQuery = "insert into [Request] ([ReqType], [ReqResp], [ReqDescr], [ReqDate], [ReqTaskId], [ReqStatus], [ReqBudget]) " +
+                    " values (@ReqType, @ReqResp, @ReqDescr, @ReqDate, @ReqTaskId, @ReqStatus, @ReqBudget)";
+
+                Data_Utilities.ModifyDataBase_Parameters(_createRequestQuery, _parameters);
+
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
+            }
+
+            if (_sender.CommandName == "CLOSE")
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
+
+            if (_sender.CommandName == "PENDING")
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
+            
+            InterfaceByUser();
         }
 
         protected void FinanceRequest_Click(object sender, EventArgs e)

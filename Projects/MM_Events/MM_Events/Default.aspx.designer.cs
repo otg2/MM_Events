@@ -202,6 +202,33 @@ namespace MM_Events {
         protected global::Telerik.Web.UI.RadWindow Window_OutsourceRequest;
         
         /// <summary>
+        /// RadLabel4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel4;
+        
+        /// <summary>
+        /// OutsourceRequest_Regarding control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox OutsourceRequest_Regarding;
+        
+        /// <summary>
+        /// OutsourceRequest_ViewEvent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton OutsourceRequest_ViewEvent;
+        
+        /// <summary>
         /// RadLabel1 control.
         /// </summary>
         /// <remarks>
@@ -256,13 +283,22 @@ namespace MM_Events {
         protected global::Telerik.Web.UI.RadTextBox OutsourceRequest_Descr;
         
         /// <summary>
-        /// OutsourceRequest_Send control.
+        /// OutsourceRequest_Reject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton OutsourceRequest_Send;
+        protected global::Telerik.Web.UI.RadButton OutsourceRequest_Reject;
+        
+        /// <summary>
+        /// OutsourceRequest_Accept control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton OutsourceRequest_Accept;
         
         /// <summary>
         /// Window_ViewTask control.

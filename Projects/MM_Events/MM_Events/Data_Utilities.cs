@@ -262,4 +262,64 @@ public static class Data_Utilities
 
         ModifyDataBase_Parameters(query, _parameters);
     }
+
+    internal static void SetTaskExtraBudget(int taskId, decimal budget)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+            new string[] { "@TaskExtraBudget", budget.ToString() }
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskExtraBudget = @TaskExtraBudget ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    internal static void SetTaskExtraComment(int taskId, string comment)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+            new string[] { "@TaskExtraComment", comment }
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskExtraComment = @TaskExtraComment ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    internal static void SetTaskResponsible(int taskId, string responsible)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+            new string[] { "@TaskTeam", responsible }
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskTeam = @TaskTeam ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    internal static void SetTaskBudget(int taskId, decimal budget)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+            new string[] { "@TaskBudget", budget.ToString() }
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskBudget = @TaskBudget ";
+        query += "WHERE TaskId = @TaskId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
 }
