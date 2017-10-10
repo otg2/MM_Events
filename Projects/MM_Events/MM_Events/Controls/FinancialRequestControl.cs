@@ -9,18 +9,26 @@ namespace MM_Events.Controls
         {
             var task = GetTaskForFinancialRequest(requestId);
             var responsible = task["TaskTeam"] as string;
+            var taskId = Convert.ToInt32(task["TaskId"]);
+            var subteam = task["TaskStatusMsg"] as string;
 
-
-            SubmitRequest(requestId, responsible, approved);
+            SubmitRequest(requestId, taskId, subteam, responsible, approved);
         }
 
-        private static void SubmitRequest(int requestId, string responsible, bool approved)
+        private static void SubmitRequest(int requestId, int taskId, string subteam, string responsible, bool approved)
         {
             Data_Utilities.SetResponsibleForRequest(requestId, responsible);
             if (approved)
+            {
                 Data_Utilities.SetRequestStatus(requestId, "APPROVED");
+                Data_Utilities.SetTaskStatus(taskId, "IN PROGRESS");
+                Data_Utilities.SetTaskResponsible(taskId, subteam);
+            }
             else
+            {
                 Data_Utilities.SetRequestStatus(requestId, "REJECTED");
+                Data_Utilities.SetTaskStatus(taskId, "CLOSED");
+            }
         }
 
         private static DataRow GetTaskForFinancialRequest(int requestId)

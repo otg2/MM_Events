@@ -15,7 +15,7 @@ namespace MM_Events.Controls
 
             if (nextStatus == "PENDING")
             {
-                SendTaskToSubteam(taskId, nextStatus, budget, requestedBudget, subteam, comment);
+                SendTaskToSubteam(taskId, nextStatus, requestedBudget, comment);
             }
             else if (nextStatus == "PENDING FINANCIAL REQUEST")
             {
@@ -102,9 +102,9 @@ namespace MM_Events.Controls
             Data_Utilities.SetTaskExtraComment(taskId, comment);
         }
 
-        private static void SendTaskToSubteam(int taskId, string nextStatus, decimal budget, decimal requiredBudget, string subteam, string comment)
+        private static void SendTaskToSubteam(int taskId, string nextStatus, decimal requiredBudget, string comment)
         {
-            Data_Utilities.SetTaskResponsible(taskId, subteam);
+            Data_Utilities.SetTaskResponsible(taskId, "");
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
             Data_Utilities.SetTaskExtraComment(taskId, comment);
             if (requiredBudget > 0)
