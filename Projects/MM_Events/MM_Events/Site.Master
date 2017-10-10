@@ -60,7 +60,7 @@
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         
                     </ul>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <asp:LoginView ID="MainLoginView" runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register">Register</a></li>
@@ -69,7 +69,8 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li><a id="LinkName" runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> (<%: Data_Utilities.getSQLDataByQuery("select userroledisplay from users where Username = '" +Context.User.Identity.Name.ToUpper() + "'" ).Rows[0][0].ToString() %>) !</a></li>
+                                <li><asp:Label runat="server" ID="Role"></asp:Label></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>

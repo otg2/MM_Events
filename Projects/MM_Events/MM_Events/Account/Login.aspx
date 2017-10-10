@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="Log in" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="MM_Events.Account.Login" Async="true" %>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+<%@ Register assembly="Telerik.Web.UI.Skins" namespace="Telerik.Web.UI.Skins" tagprefix="telerikh" %>
 
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
@@ -9,6 +11,7 @@
         <div class="col-md-8">
             <section id="loginForm">
                 <div class="form-horizontal">
+
                     <h4>Use a local account to log in.</h4>
                     <hr />
                       <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
@@ -20,15 +23,16 @@
                         <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                CssClass="text-danger" ErrorMessage="The user name field is required." />
+                            <!--<asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
+                                CssClass="text-danger" ErrorMessage="The user name field is required." /> -->
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" Text="hallo1" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
+                            <!--<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" 
+                                CssClass="text-danger" ErrorMessage="The password field is required." /> -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,6 +57,39 @@
         </div>
 
         <div class="col-md-4">
+            <h4>Login with out custom made users - safe and easy!</h4>
+             <ul>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton7" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="JACK - Production Manager" Value="JACK" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton6" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="ALICE - Financial Manager" Value="ALICE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton1" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="MARK - Administration" Value="MARK" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton2" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="DANIEL - Chef" Value="DANIEL" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton3" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="JANET - Senior Customer Service" Value="JANET" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton4" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="SIMON - Human Resources" Value="SIMON" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li>
+                     <telerik:RadButton runat="server" ID="RadButton5" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                    Text="NATALIE - Service Department Manager" Value="NATALIE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+
+            </ul>
             <section id="socialLoginForm">
                 <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
             </section>

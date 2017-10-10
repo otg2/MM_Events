@@ -12,13 +12,13 @@
             function OpenEventFromTask(sender, args)
             {
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Event");
-                openModalWindow($find('<%= Window_EventForm.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_EventForm.ClientID %>'), 0.7, 0.7);
             }
 
             function OpenEditForm(sender, args)
             {
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Event");
-                openModalWindow($find('<%= Window_EventForm.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_EventForm.ClientID %>'), 0.7, 0.7);
             } 
 
             function openNewEventRequestForm(sender, args)
@@ -141,7 +141,9 @@
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Regarding" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_ViewEvent" LoadingPanelID="LoadingPanel1" />
                     
+                    <telerik:AjaxUpdatedControl ControlID="EventForm_OutsourceRequest" LoadingPanelID="LoadingPanel1" />
 
+                    
                 </UpdatedControls>
             </telerik:AjaxSetting>
             
@@ -194,6 +196,14 @@
                     
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="EventOutsourceRequest_Create">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Radgrid_Events" LoadingPanelID="LoadingPanel1"/>
+                    <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Feedback" LoadingPanelID="LoadingPanel1"/>
+                    
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            
             
         </AjaxSettings>
     </telerik:RadAjaxManager>
@@ -291,15 +301,7 @@
                                 <telerik:RadLabel runat="server" ID="RadLabel2" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
                                 <telerik:RadComboBox runat="server" ID="OutsourceRequest_Subteam" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
                                      EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
-                                    <Items>
-                                        <telerik:RadComboBoxItem Text="Audio Technician" Value="AUDIO" />
-                                        <telerik:RadComboBoxItem Text="Chef" Value="CHEF" />
-                                        <telerik:RadComboBoxItem Text="Catering" Value="CATERING" />
-                                        <telerik:RadComboBoxItem Text="Decoration" Value="DECORATION" />
-                                        <telerik:RadComboBoxItem Text="Graphic Designer" Value="GRAPHIC_DESIGNER" />
-                                        <telerik:RadComboBoxItem Text="IT department" Value="IT" />
-                                        <telerik:RadComboBoxItem Text="Photographer" Value="PHOTOGRAPHER" />
-                                    </Items>
+                                    
                                 </telerik:RadComboBox>
                             </div>
                         </div>
@@ -449,15 +451,7 @@
                                 <telerik:RadLabel runat="server" ID="Task_Subteams_Label" Text="Assign a task to sub team" Font-Bold="true"></telerik:RadLabel>
                                 <telerik:RadComboBox runat="server" ID="Task_Subteams" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
                                      EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
-                                    <Items>
-                                        <telerik:RadComboBoxItem Text="Audio Technician" Value="AUDIO" />
-                                        <telerik:RadComboBoxItem Text="Chef" Value="CHEF" />
-                                        <telerik:RadComboBoxItem Text="Catering" Value="CATERING" />
-                                        <telerik:RadComboBoxItem Text="Decoration" Value="DECORATION" />
-                                        <telerik:RadComboBoxItem Text="Graphic Designer" Value="GRAPHIC_DESIGNER" />
-                                        <telerik:RadComboBoxItem Text="IT department" Value="IT" />
-                                        <telerik:RadComboBoxItem Text="Photographer" Value="PHOTOGRAPHER" />
-                                    </Items>
+                                    
                                 </telerik:RadComboBox>
                             </div>
                             
@@ -476,8 +470,37 @@
                                 Skin="Simple" OnClick="Task_AddTaskToEvent_Click" ></telerik:RadButton>
                             <telerik:RadTextBox runat="server" ID="Task_Feedback" RenderMode="Lightweight" ></telerik:RadTextBox>
                         </div>
-                        <div id="EventForm_Actions" style="clear:both">
-                            <p>----</p>
+
+                        <div id="EventForm_Actions" style="clear:both;text-align:center">
+                            <p>----------------------------------</p>
+                        </div>
+                        <div id="EventForm_OutsourceRequest" runat="server"  style="clear:both">
+                        <h3>Create an outsource request</h3>
+
+                        <div style="float:left; margin:5px 10px">
+                            <telerik:RadLabel runat="server" ID="RadLabel7" Text="Outsource Name" Font-Bold="true"></telerik:RadLabel>
+                            <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                        </div>
+                        <div style="float:left; margin:5px 10px">
+                            <telerik:RadLabel runat="server" ID="RadLabel5" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
+                            <telerik:RadComboBox runat="server" ID="EventOutsourceRequest_Subteam" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
+                                    EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
+                               
+                            </telerik:RadComboBox>
+                        </div>
+                        <div style="margin:5%; clear:both">
+                            <div style="float:left; margin:5px 10px">
+                                <telerik:RadLabel runat="server" ID="RadLabel6" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                 <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Description" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
+                                    EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                            </div>
+                        </div>
+                        <div style="margin:5%; clear:both">
+                            <telerik:RadButton runat="server" ID="EventOutsourceRequest_Create" Text="Create Task" AutoPostBack="true" RenderMode="Lightweight"
+                                Skin="Simple" OnClick="EventOutsourceRequest_Create_Click" ></telerik:RadButton>
+                            <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Feedback" Width="250px"
+                                 RenderMode="Lightweight" ></telerik:RadTextBox>
+                        </div>
                         </div>
                     </div>
                 </ContentTemplate>

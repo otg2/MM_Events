@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using MM_Events.Models;
+using Telerik.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MM_Events.Account
 {
@@ -27,11 +29,22 @@ namespace MM_Events.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            Login_Name(UserName.Text);
+        }
+
+        protected void LogIn_Extra(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            Login_Name(btn.Text.Split('-')[0].Trim());
+        }
+
+        private void Login_Name(string aName)
+        {
+            if (true)
             {
                 // Validate the user password
                 var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
+                ApplicationUser user = manager.Find(aName, "hallo1"); // Password.Text
                 if (user != null)
                 {
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
@@ -43,6 +56,12 @@ namespace MM_Events.Account
                     ErrorMessage.Visible = true;
                 }
             }
+        }
+
+        protected void Login_Telerik_Click(object sender, EventArgs e)
+        {
+            RadButton _sender = (RadButton) sender;
+            Login_Name(_sender.Value);
         }
     }
 }

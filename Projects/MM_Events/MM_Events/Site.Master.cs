@@ -5,6 +5,7 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace MM_Events
@@ -68,7 +69,17 @@ namespace MM_Events
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Label theLabel = ((Label)(this.MainLoginView.FindControl("RoleDisplay")));
+            
+           /* List<string[]> _parameters = new List<string[]>();
+            _parameters.Add(new string[] { "@UserName", Context.User.Identity.Name.ToUpper() });
 
+            HtmlGenericControl _control = (HtmlGenericControl)this.Master.FindControl("LinkName");
+            //HtmlAnchor MyLnk = 
+            
+            _control.InnerHtml = "Logged in as " + Context.User.Identity.Name + "! (" +
+                Data_Utilities.getSQLDataByQuery_Parameters("select userrole from users where Username = @UserName", _parameters).Rows[0][0].ToString()
+                + ")";*/
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

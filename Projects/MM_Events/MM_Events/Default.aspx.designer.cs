@@ -724,6 +724,87 @@ namespace MM_Events {
         protected global::Telerik.Web.UI.RadTextBox Task_Feedback;
         
         /// <summary>
+        /// EventForm_OutsourceRequest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EventForm_OutsourceRequest;
+        
+        /// <summary>
+        /// RadLabel7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel7;
+        
+        /// <summary>
+        /// EventOutsourceRequest_Name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox EventOutsourceRequest_Name;
+        
+        /// <summary>
+        /// RadLabel5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel5;
+        
+        /// <summary>
+        /// EventOutsourceRequest_Subteam control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox EventOutsourceRequest_Subteam;
+        
+        /// <summary>
+        /// RadLabel6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel6;
+        
+        /// <summary>
+        /// EventOutsourceRequest_Description control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox EventOutsourceRequest_Description;
+        
+        /// <summary>
+        /// EventOutsourceRequest_Create control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton EventOutsourceRequest_Create;
+        
+        /// <summary>
+        /// EventOutsourceRequest_Feedback control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox EventOutsourceRequest_Feedback;
+        
+        /// <summary>
         /// Window_NewEventRequestForm control.
         /// </summary>
         /// <remarks>

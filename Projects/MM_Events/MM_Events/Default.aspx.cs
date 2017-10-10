@@ -52,14 +52,59 @@ namespace MM_Events
                 Utilities.DisableTextBox(FinanceRequest_Department);
                 Utilities.DisableTextBox(FinanceRequest_Descr);
 
+                Utilities.DisableTextBox(EventOutsourceRequest_Feedback);
 
-
+                
+                            
                 Utilities.SetStandardGrid(Radgrid_Events);
 
                 if(User.Identity.IsAuthenticated)
                 {
                     AuthDiv.Style.Add("display", "inline");
                     NoAuthDiv.Style.Add("display", "none");
+
+                    List<string[]> _parameters = new List<string[]>();
+                    _parameters.Add(new string[] { "@UserName", User.Identity.Name.ToUpper() });
+                    DataTable _table = Data_Utilities.getSQLDataByQuery_Parameters("select userrole from users where Username = @UserName", _parameters);
+
+                    string _userRole = _table.Rows[0][0].ToString();
+                   
+                    // Set the create new event request view
+
+                    //ugh - lazy
+                    if (_userRole == "SDM")
+                    {
+                        Task_Subteams.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
+                        Task_Subteams.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
+
+                        OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
+                        OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
+
+                        EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
+                        EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
+                    }
+                    if (_userRole == "PM")
+                    {
+                            Task_Subteams.Items.Add(new RadComboBoxItem("Audio Technician", "AUDIO"));
+                            Task_Subteams.Items.Add(new RadComboBoxItem("Decoration", "DECORATION"));
+                            Task_Subteams.Items.Add(new RadComboBoxItem("Graphic Designer", "GRAPHIC_DESIGNER"));
+                            Task_Subteams.Items.Add(new RadComboBoxItem("IT department", "IT"));
+                            Task_Subteams.Items.Add(new RadComboBoxItem("Photographer", "PHOTOGRAPHER"));
+
+                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Audio Technician", "AUDIO"));
+                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Decoration", "DECORATION"));
+                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Graphic Designer", "GRAPHIC_DESIGNER"));
+                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("IT department", "IT"));
+                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Photographer", "PHOTOGRAPHER"));
+
+                            EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Audio Technician", "AUDIO"));
+                            EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Decoration", "DECORATION"));
+                            EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Graphic Designer", "GRAPHIC_DESIGNER"));
+                            EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("IT department", "IT"));
+                            EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Photographer", "PHOTOGRAPHER"));
+                            
+                    }
+
 
                     InterfaceByUser();
 
@@ -90,7 +135,7 @@ namespace MM_Events
             
             // Set the task creation view
             EventForm_Task.Visible = _userRole == "SDM" || _userRole == "PM";
-           
+            EventForm_OutsourceRequest.Visible = EventForm_Task.Visible;
 
             // Populate Tabs list
             List<string[]> _tParameters = new List<string[]>();
@@ -209,21 +254,21 @@ namespace MM_Events
                     if (_taskStatus == "PENDING FINANCIAL REQUEST")
                     {
                         ViewTask_Accept.Text = "Send financial request";
-                        ViewTask_Accept.Value = _arguments[1].Trim();
                         ViewTask_Accept.CommandName = "FINANCIAL";
                     }
                     else if (_taskStatus == "IN PROGRESS")
                     {
                         ViewTask_Accept.Text = "Mark task finished";
-                        ViewTask_Accept.Value = _arguments[1].Trim();
                         ViewTask_Accept.CommandName = "CLOSE";
                     }
                     else if (_taskStatus == "PENDING")
                     {
                         ViewTask_Accept.Text = "Send task accept";
-                        ViewTask_Accept.Value = _arguments[1].Trim();
                         ViewTask_Accept.CommandName = "PENDING";
                     }
+
+                    ViewTask_Accept.Value = _arguments[1].Trim();
+
 
                 }
                 if (_arguments[0] == "init_Request")
@@ -503,6 +548,30 @@ namespace MM_Events
         protected void OutsourceRequest_Send_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void EventOutsourceRequest_Create_Click(object sender, EventArgs e)
+        {
+            GridDataItem _selectedEvent = Radgrid_Events.MasterTableView.GetSelectedItems()[0];
+            string _eventId = _selectedEvent["EventId"].Text;
+
+            List<string[]> _parameters = new List<string[]>();
+            _parameters.Add(new string[] { "@ReqType", "OUTSOURCE" });
+            _parameters.Add(new string[] { "@ReqResp", "HM" });
+            _parameters.Add(new string[] { "@ReqDescr", EventOutsourceRequest_Description.Text });
+            _parameters.Add(new string[] { "@ReqDate", (DateTime.Today).ToString("yyyy.MM.dd") });
+            _parameters.Add(new string[] { "@ReqTaskId", _eventId });
+            _parameters.Add(new string[] { "@ReqStatus", "OPEN" });
+            _parameters.Add(new string[] { "@ReqBudget", "" });
+
+            string _createRequestQuery = "insert into [Request] ([ReqType], [ReqResp], [ReqDescr], [ReqDate], [ReqTaskId], [ReqStatus], [ReqBudget]) " +
+                " values (@ReqType, @ReqResp, @ReqDescr, @ReqDate, @ReqTaskId, @ReqStatus, @ReqBudget)";
+
+            Data_Utilities.ModifyDataBase_Parameters(_createRequestQuery, _parameters);
+            EventOutsourceRequest_Name.Text = "";
+            EventOutsourceRequest_Subteam.ClearSelection();
+            EventOutsourceRequest_Description.Text = "";
+            EventOutsourceRequest_Feedback.Text = "Outsource request created";
         }
 
 
