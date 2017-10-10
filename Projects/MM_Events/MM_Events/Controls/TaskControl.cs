@@ -19,7 +19,8 @@ namespace MM_Events.Controls
             }
             else if (nextStatus == "PENDING FINANCIAL REQUEST")
             {
-                SendTaskToSupervisor(taskId, nextStatus, requestedBudget, comment);
+                var supervisor = task["TaskCreator"] as string;
+                SendTaskToSupervisor(taskId, supervisor, nextStatus, requestedBudget, comment);
             }
             else
             {
@@ -78,9 +79,9 @@ namespace MM_Events.Controls
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
         }
 
-        private static void SendTaskToSupervisor(int taskId, string nextStatus, decimal budget, string comment)
+        private static void SendTaskToSupervisor(int taskId, string supervisor, string nextStatus, decimal budget, string comment)
         {
-            Data_Utilities.SetTaskResponsible(taskId, "PM");
+            Data_Utilities.SetTaskResponsible(taskId, supervisor);
             Data_Utilities.SetTaskExtraBudget(taskId, budget);
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
             Data_Utilities.SetTaskExtraComment(taskId, comment);
@@ -92,7 +93,10 @@ namespace MM_Events.Controls
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
             Data_Utilities.SetTaskExtraComment(taskId, comment);
             if (requiredBudget > 0)
-                Data_Utilities.SetTaskBudget(taskId, budget);
+            {
+                Data_Utilities.SetTaskExtraBudget(taskId, 0m);
+                Data_Utilities.SetTaskBudget(taskId, requiredBudget);
+            }
         }
     }
 }
