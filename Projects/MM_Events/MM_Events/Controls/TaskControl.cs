@@ -19,7 +19,7 @@ namespace MM_Events.Controls
             }
             else if (nextStatus == "PENDING FINANCIAL REQUEST")
             {
-                var supervisor = task["TaskCreator"] as string;
+                var supervisor = GetSupervisor(task);
                 SendTaskToSupervisor(taskId, supervisor, nextStatus, requestedBudget, comment);
             }
             else
@@ -30,9 +30,24 @@ namespace MM_Events.Controls
             SetTaskStatus(taskId, nextStatus);
         }
 
+        private static string GetSupervisor(DataRow task)
+        {
+            return Data_Utilities.GetUserRole(task["TaskCreator"] as string);
+        }
+
         public static void CancelTask(int taskId)
         {
             CloseTask(taskId);
+        }
+
+        public static void TaskFinished(int taskId)
+        {
+            SetTaskAsFinished(taskId);
+        }
+
+        private static void SetTaskAsFinished(int taskId)
+        {
+            Data_Utilities.SetTaskStatusToFinished(taskId);
         }
 
         private static void CloseTask(int taskId)
