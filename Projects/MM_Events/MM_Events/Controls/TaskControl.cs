@@ -22,12 +22,21 @@ namespace MM_Events.Controls
                 var supervisor = GetSupervisor(task);
                 SendTaskToSupervisor(taskId, supervisor, nextStatus, requestedBudget, comment);
             }
+            else if(nextStatus == "FINISHED")
+            {
+                FinishTask(taskId, nextStatus, comment);
+            }
             else
             {
                 SetTaskToInProgress(taskId, nextStatus, requestedBudget, comment);
             }
+        }
 
-            SetTaskStatus(taskId, nextStatus);
+        private static void FinishTask(int taskId, string nextStatus, string comment)
+        {
+            Data_Utilities.SetTaskExtraComment(taskId, comment);
+            Data_Utilities.SetTaskStatus(taskId, nextStatus);
+            Data_Utilities.SetTaskResponsible(taskId, "");
         }
 
         private static string GetSupervisor(DataRow task)
@@ -73,6 +82,10 @@ namespace MM_Events.Controls
                     return "IN PROGRESS";
                 }
             }
+            else if(taskStatus == "IN PROGRESS")
+            {
+                return "FINISHED";
+            }
             else
             {
                 return "PENDING";
@@ -82,11 +95,6 @@ namespace MM_Events.Controls
         private static DataRow GetTaskForId(int taskId)
         {
             return Data_Utilities.GetTask(taskId);
-        }
-
-        private static void SetTaskStatus(int taskId, string nextStatus)
-        {
-            Data_Utilities.SetTaskStatus(taskId, nextStatus);
         }
 
         private static void SetTaskToInProgress(int taskId, string nextStatus, decimal budget, string comment)
