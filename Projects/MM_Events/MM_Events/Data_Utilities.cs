@@ -385,34 +385,4 @@ public static class Data_Utilities
 
         ModifyDataBase_Parameters(query, _parameters);
     }
-
-    internal static string GetUserRole(string user)
-    {
-        var _parameters = new List<string[]>
-        {
-            new string[] { "@Username", user}
-        };
-
-        var query = "SELECT UserRole ";
-        query += "FROM Users ";
-        query += "WHERE Username = @Username ";
-
-        DataTable _table = getSQLDataByQuery_Parameters("SELECT * FROM Task WHERE TaskId = @TaskId", _parameters);
-
-        return _table.Rows[0]["UserRole"] as string;
-    }
-
-    internal static void SetTaskStatusToFinished(int taskId)
-    {
-        var _parameters = new List<string[]>
-        {
-            new string[] { "@TaskId", taskId.ToString() },
-        };
-
-        var query = "UPDATE Task ";
-        query += "SET TaskStatus = 'FINSHED' ";
-        query += "WHERE TaskId = @TaskId ";
-
-        ModifyDataBase_Parameters(query, _parameters);
-    }
 }
