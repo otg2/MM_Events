@@ -10,15 +10,7 @@ namespace MM_Events.Controls
     {
         public static void SubmitRequest(int requestId, bool approved)
         {
-            var task = GetTaskForFinancialRequest(requestId);
-            var responsible = task["TaskTeam"] as string;
-
-            SubmitRequest(requestId, responsible, approved);
-        }
-
-        private static void SubmitRequest(int requestId, string responsible, bool approved)
-        {
-            Data_Utilities.SetResponsibleForRequest(requestId, responsible);
+            Data_Utilities.SetResponsibleForRequest(requestId, "");
             if (approved)
                 Data_Utilities.SetRequestStatus(requestId, "APPROVED");
             else

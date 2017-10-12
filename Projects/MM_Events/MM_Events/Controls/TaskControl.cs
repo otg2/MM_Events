@@ -15,23 +15,48 @@ namespace MM_Events.Controls
 
             if (nextStatus == "PENDING")
             {
-                SendTaskToSubteam(taskId, nextStatus, budget, requestedBudget, subteam, comment);
+                SendTaskToSubteam(taskId, nextStatus, requestedBudget, comment);
             }
             else if (nextStatus == "PENDING FINANCIAL REQUEST")
             {
-                SendTaskToSupervisor(taskId, nextStatus, requestedBudget, comment);
+                var supervisor = GetSupervisor(task);
+                SendTaskToSupervisor(taskId, supervisor, nextStatus, requestedBudget, comment);
+            }
+            else if (nextStatus == "FINISHED")
+            {
+                FinishTask(taskId, nextStatus, comment);
             }
             else
             {
                 SetTaskToInProgress(taskId, nextStatus, requestedBudget, comment);
             }
+        }
 
-            SetTaskStatus(taskId, nextStatus);
+        private static void FinishTask(int taskId, string nextStatus, string comment)
+        {
+            Data_Utilities.SetTaskExtraComment(taskId, comment);
+            Data_Utilities.SetTaskStatus(taskId, nextStatus);
+            Data_Utilities.SetTaskResponsible(taskId, "");
+        }
+
+        private static string GetSupervisor(DataRow task)
+        {
+            return Data_Utilities.GetUserRole(task["TaskCreator"] as string);
         }
 
         public static void CancelTask(int taskId)
         {
             CloseTask(taskId);
+        }
+
+        public static void TaskFinished(int taskId)
+        {
+            SetTaskAsFinished(taskId);
+        }
+
+        private static void SetTaskAsFinished(int taskId)
+        {
+            Data_Utilities.SetTaskStatusToFinished(taskId);
         }
 
         private static void CloseTask(int taskId)
@@ -57,6 +82,10 @@ namespace MM_Events.Controls
                     return "IN PROGRESS";
                 }
             }
+            else if (taskStatus == "IN PROGRESS")
+            {
+                return "FINISHED";
+            }
             else
             {
                 return "PENDING";
@@ -68,31 +97,29 @@ namespace MM_Events.Controls
             return Data_Utilities.GetTask(taskId);
         }
 
-        private static void SetTaskStatus(int taskId, string nextStatus)
-        {
-            Data_Utilities.SetTaskStatus(taskId, nextStatus);
-        }
-
         private static void SetTaskToInProgress(int taskId, string nextStatus, decimal budget, string comment)
         {
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
         }
 
-        private static void SendTaskToSupervisor(int taskId, string nextStatus, decimal budget, string comment)
+        private static void SendTaskToSupervisor(int taskId, string supervisor, string nextStatus, decimal budget, string comment)
         {
-            Data_Utilities.SetTaskResponsible(taskId, "PM");
+            Data_Utilities.SetTaskResponsible(taskId, supervisor);
             Data_Utilities.SetTaskExtraBudget(taskId, budget);
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
             Data_Utilities.SetTaskExtraComment(taskId, comment);
         }
 
-        private static void SendTaskToSubteam(int taskId, string nextStatus, decimal budget, decimal requiredBudget, string subteam, string comment)
+        private static void SendTaskToSubteam(int taskId, string nextStatus, decimal requiredBudget, string comment)
         {
-            Data_Utilities.SetTaskResponsible(taskId, subteam);
+            Data_Utilities.SetTaskResponsible(taskId, "");
             Data_Utilities.SetTaskStatus(taskId, nextStatus);
             Data_Utilities.SetTaskExtraComment(taskId, comment);
             if (requiredBudget > 0)
-                Data_Utilities.SetTaskBudget(taskId, budget);
+            {
+                Data_Utilities.SetTaskExtraBudget(taskId, 0m);
+                Data_Utilities.SetTaskBudget(taskId, requiredBudget);
+            }
         }
     }
 }

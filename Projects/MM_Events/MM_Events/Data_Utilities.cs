@@ -336,7 +336,7 @@ public static class Data_Utilities
         query += "FROM Request ";
         query += "WHERE ReqId = @RequestId)";
 
-        DataTable _table = getSQLDataByQuery_Parameters("SELECT * FROM Task WHERE TaskId = @TaskId", _parameters);
+        DataTable _table = getSQLDataByQuery_Parameters(query, _parameters);
 
         return _table.Rows[0];
     }
@@ -350,7 +350,37 @@ public static class Data_Utilities
         };
 
         var query = "UPDATE Request ";
-        query += "SET TaskBudget = @TaskBudget ";
+        query += "SET ReqStatus = @ReqStatus ";
+        query += "WHERE ReqId = @ReqId ";
+
+        ModifyDataBase_Parameters(query, _parameters);
+    }
+
+    internal static string GetUserRole(string user)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@Username", user}
+        };
+
+        var query = "SELECT UserRole ";
+        query += "FROM Users ";
+        query += "WHERE Username = @Username ";
+
+        DataTable _table = getSQLDataByQuery_Parameters(query, _parameters);
+
+        return _table.Rows[0]["UserRole"] as string;
+    }
+
+    internal static void SetTaskStatusToFinished(int taskId)
+    {
+        var _parameters = new List<string[]>
+        {
+            new string[] { "@TaskId", taskId.ToString() },
+        };
+
+        var query = "UPDATE Task ";
+        query += "SET TaskStatus = 'FINSHED' ";
         query += "WHERE TaskId = @TaskId ";
 
         ModifyDataBase_Parameters(query, _parameters);

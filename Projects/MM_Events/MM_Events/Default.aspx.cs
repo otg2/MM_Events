@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using MM_Events.Controls;
+using System.Drawing;
 
 namespace MM_Events
 {
@@ -52,6 +53,14 @@ namespace MM_Events
                 Utilities.DisableTextBox(FinanceRequest_Department);
                 Utilities.DisableTextBox(FinanceRequest_Descr);
 
+
+                Utilities.DisableTextBox(OutsourceRequest_Regarding);
+                Utilities.DisableTextBox(OutsourceRequest_Descr);
+                
+                Utilities.DisableTextBox(OutsourceRequest_Name);
+                Utilities.DisableTextBox(OutsourceRequest_Subteam);
+                
+
                 Utilities.DisableTextBox(EventOutsourceRequest_Feedback);
 
                 
@@ -77,9 +86,6 @@ namespace MM_Events
                         Task_Subteams.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
                         Task_Subteams.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
 
-                        OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
-                        OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
-
                         EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Chef", "CHEF"));
                         EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Catering", "CATERING"));
                     }
@@ -90,12 +96,6 @@ namespace MM_Events
                             Task_Subteams.Items.Add(new RadComboBoxItem("Graphic Designer", "GRAPHIC_DESIGNER"));
                             Task_Subteams.Items.Add(new RadComboBoxItem("IT department", "IT"));
                             Task_Subteams.Items.Add(new RadComboBoxItem("Photographer", "PHOTOGRAPHER"));
-
-                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Audio Technician", "AUDIO"));
-                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Decoration", "DECORATION"));
-                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Graphic Designer", "GRAPHIC_DESIGNER"));
-                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("IT department", "IT"));
-                            OutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Photographer", "PHOTOGRAPHER"));
 
                             EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Audio Technician", "AUDIO"));
                             EventOutsourceRequest_Subteam.Items.Add(new RadComboBoxItem("Decoration", "DECORATION"));
@@ -131,12 +131,27 @@ namespace MM_Events
             string _userRole = _table.Rows[0][0].ToString() ;
             
             // Set the create new event request view
-            Div_CreateNewEventRequest.Visible = (_userRole == "SCS" || _userRole == "CS");
-            
-            // Set the task creation view
-            EventForm_Task.Visible = _userRole == "SDM" || _userRole == "PM";
-            EventForm_OutsourceRequest.Visible = EventForm_Task.Visible;
+            if (_userRole == "SCS" || _userRole == "CS")
+            {
+            }
+            else
+                Div_CreateNewEventRequest.Style.Add("display", "none");
 
+
+            // Set the task creation view
+            if (_userRole == "SDM" || _userRole == "PM")
+            {
+                
+            }
+            else
+            {
+                EventForm_Task.Style.Add("display", "none");
+                EventForm_OutsourceRequest.Style.Add("display", "none");
+            }
+
+            Div_GeneratedTasks.Controls.Clear();
+            Div_GeneratedRequests.Controls.Clear();
+            
             // Populate Tabs list
             List<string[]> _tParameters = new List<string[]>();
             _tParameters.Add(new string[] { "@TaskTeam", _userRole });
@@ -156,9 +171,17 @@ namespace MM_Events
                     _generatedTask_Button.Width = 350;
                     _generatedTask_Button.Style.Add("margin", "10px 0px");
                     _generatedTask_Button.OnClientClicked = "openTaskForm";
-                    _generatedTask_Button.Skin = _status == "IN PROGRESS" ? "Sunset" : "Metro";
+
+                    _generatedTask_Button.Skin = _status == "IN PROGRESS" ? "Sunset" : "Office2007";
                     Div_GeneratedTasks.Controls.Add(_generatedTask_Button);
                 }
+            }
+            else
+            {
+                RadLabel _label = new RadLabel();
+                _label.RenderMode = RenderMode.Lightweight;
+                _label.Text = "You have no tasks assigned to you at the moment";
+                Div_GeneratedTasks.Controls.Add(_label);
             }
 
             // Populate Request list
@@ -171,7 +194,9 @@ namespace MM_Events
                 {
                     string _reqType = _requestTable.Rows[i]["ReqType"].ToString();
                     string _displayName;
-                    if (_reqType == "EVENT" || _reqType == "OUTSOURCE")
+                    if (_reqType == "OUTSOURCE")
+                        _displayName = Data_Utilities.getSQLDataByQuery("select EventName from [Events] where EventId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
+                    else if (_reqType == "EVENT")
                         _displayName = Data_Utilities.getSQLDataByQuery("select EventName from [Events] where EventId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
                     else
                         _displayName = Data_Utilities.getSQLDataByQuery("select TaskName from [Task] where TaskId=" + _requestTable.Rows[i]["ReqTaskId"].ToString()).Rows[0][0].ToString();
@@ -184,6 +209,7 @@ namespace MM_Events
                     _generatedRequest_Button.Value = _requestTable.Rows[i]["ReqId"].ToString(); // var reqtaskid
                     _generatedRequest_Button.AutoPostBack = false;
                     _generatedRequest_Button.Width = 350;
+                    _generatedRequest_Button.Skin = "Office2007"; 
                     _generatedRequest_Button.Style.Add("margin","10px 0px");
 
                     if (_reqType=="EVENT")
@@ -200,13 +226,19 @@ namespace MM_Events
 
                 }
             }
+            else {
+                RadLabel _label = new RadLabel();
+                _label.RenderMode = RenderMode.Lightweight;
+                _label.Text = "You have no requests assigned to you at the moment";
+                Div_GeneratedRequests.Controls.Add(_label);
+            }
         }
 
         protected void Radgrid_Events_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             RadGrid _sender = (RadGrid)sender;
 
-            _sender.DataSource = Data_Utilities.getSQLDataByQuery("select * from [Events] where [EventStatus] in('APPROVED','PENDING_REPORT')");
+            _sender.DataSource = Data_Utilities.getSQLDataByQuery("select * from [Events] where [EventStatus] in('APPROVED','PENDING_REPORT') order by EventFrom asc");
         }
 
         protected void Events_AjaxManager_AjaxRequest(object sender, AjaxRequestEventArgs e)
@@ -249,7 +281,10 @@ namespace MM_Events
                     ViewTask_ExtraComment.Text = _taskInfo.Rows[0]["TaskExtraComment"].ToString();
 
                     string _taskStatus = _taskInfo.Rows[0]["TaskStatus"].ToString();
-                   
+
+                    ViewTask_ExtraBudget.ReadOnly = false;
+                    ViewTask_ExtraComment.ReadOnly = false;
+                    
 
                     if (_taskStatus == "PENDING FINANCIAL REQUEST")
                     {
@@ -258,6 +293,10 @@ namespace MM_Events
                     }
                     else if (_taskStatus == "IN PROGRESS")
                     {
+                        ViewTask_ExtraBudget.ReadOnly = true;
+                        ViewTask_ExtraComment.ReadOnly = true;
+
+
                         ViewTask_Accept.Text = "Mark task finished";
                         ViewTask_Accept.CommandName = "CLOSE";
                     }
@@ -273,11 +312,16 @@ namespace MM_Events
                 }
                 if (_arguments[0] == "init_Request")
                 {
+                    List<string[]> _reqParamenter = new List<string[]>();
+                    _reqParamenter.Add(new string[] { "@ReqId", _arguments[1].Trim() });
+
+                    DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqId]=@ReqId and [ReqType]='EVENT'", _reqParamenter);
+
                     List<string[]> _eventParamenter = new List<string[]>();
-                    _eventParamenter.Add(new string[] { "@EventId", _arguments[1].Trim() });
+                    _eventParamenter.Add(new string[] { "@EventId", _requestInfo.Rows[0]["ReqTaskId"].ToString() });
 
                     DataTable _eventInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Events] where [EventId]=@EventId", _eventParamenter);
-                    DataTable _requestInfo = Data_Utilities.getSQLDataByQuery_Parameters("select * from [Request] where [ReqTaskId]=@EventId and [ReqType]='EVENT'", _eventParamenter);
+                    
 
                     RequestEvent_Name.Text = _eventInfo.Rows[0]["EventName"].ToString();
                     RequestEvent_Descr.Text = _eventInfo.Rows[0]["EventDescr"].ToString();
@@ -349,7 +393,11 @@ namespace MM_Events
                     FinanceRequest_Department.Text =  _taskInfo.Rows[0]["TaskStatusMsg"].ToString();
                     FinanceRequest_Descr.Text = _taskInfo.Rows[0]["TaskExtraComment"].ToString() + " | " + _taskInfo.Rows[0]["TaskDescr"].ToString();
                     FinanceRequest_Original.Text = _taskInfo.Rows[0]["TaskBudget"].ToString();
-                    FinanceRequest_Extra.Text = _taskInfo.Rows[0]["TaskExtraBudget"].ToString();
+                    //FinanceRequest_Extra.Text = _taskInfo.Rows[0]["TaskExtraBudget"].ToString();
+
+                    FinanceRequest_Reject.CommandName = _arguments[1].Trim();
+                    FinanceRequest_Accept.CommandName = _arguments[1].Trim();
+                    
 
                 }
                 if (_arguments[0] == "init_RequestOutsource")
@@ -374,12 +422,19 @@ namespace MM_Events
                         }
                     }
 
-                    OutsourceRequest_Name.Text = "NAME OF REQUEST";// _taskInfo.Rows[0]["TaskName"].ToString();
-                    OutsourceRequest_Subteam.SelectedValue = "CHEF";// _taskInfo.Rows[0]["TaskStatusMsg"].ToString();
-                    OutsourceRequest_Descr.Text = _requestInfo.Rows[0]["ReqDescr"].ToString();
+                    string[] _outsourceInfo = _requestInfo.Rows[0]["ReqDescr"].ToString().Split('|');
+
+                    
+
+                    OutsourceRequest_Name.Text = _outsourceInfo[0];// _taskInfo.Rows[0]["TaskName"].ToString();
+                    OutsourceRequest_Subteam.Text = Data_Utilities.getSQLDataByQuery("select UserRoleDisplay from [Users] where UserRole='" + _outsourceInfo[2] + "'").Rows[0][0].ToString();// _taskInfo.Rows[0]["TaskStatusMsg"].ToString();
+                    OutsourceRequest_Descr.Text = _outsourceInfo[1];
 
                     OutsourceRequest_Regarding.Text = _eventInfo.Rows[0]["EventName"].ToString();
                     OutsourceRequest_ViewEvent.Value = _eventInfo.Rows[0]["EventId"].ToString();
+
+                    OutsourceRequest_Reject.Value = _arguments[1].Trim();
+                    OutsourceRequest_Accept.Value = _arguments[1].Trim();
                 }
             }
 
@@ -398,6 +453,27 @@ namespace MM_Events
                     EventForm_Budget.Text = _selectedEvent["EventBudget"].Text;
                     EventForm_Guests.Text = _selectedEvent["EventGuests"].Text;
                     EventForm_Type.Text = _selectedEvent["EventType"].Text;
+
+                    Task_Feedback.Text = "";
+                    EventOutsourceRequest_Feedback.Text = "";
+
+                    //return;
+                    EventForm_Task_Info.Controls.Clear();
+                    GridView DisplayTaskToEvent = new GridView();
+                    DisplayTaskToEvent.DataSource = Data_Utilities.getSQLDataByQuery(
+                        "select TaskName, TaskDescr, TaskStatus, TaskCreator, TaskTeam from [Task] where TaskEventId=" + _selectedEvent["EventId"].Text);
+                    DisplayTaskToEvent.DataBind();
+                    EventForm_Task_Info.Controls.Add(DisplayTaskToEvent);
+
+                    EventForm_OutsourceRequest_Info.Controls.Clear();
+                    GridView DisplayRequestToEvent = new GridView();
+                    DisplayRequestToEvent.DataSource = Data_Utilities.getSQLDataByQuery(
+                        "select ReqType, ReqStatus, ReqDescr, ReqDate,ReqResp from [Request] where ReqType in ('OUTSOURCE', 'FINANCE') AND ReqTaskId=" + _selectedEvent["EventId"].Text);
+                    DisplayRequestToEvent.DataBind();
+                    EventForm_OutsourceRequest_Info.Controls.Add(DisplayRequestToEvent);
+
+                    
+
                 }
                 if (e.Argument == "init_NewRequest")
                 {
@@ -476,12 +552,23 @@ namespace MM_Events
 
             Data_Utilities.ModifyDataBase_Parameters(_createRequestQuery, _parameters);
 
-            NewEventRequestForm_Feedback.Text = "New event request created. Hope the SCS approves :O";
+            NewEventRequestForm_Feedback.Text = "New event request created.";
+            NewEventRequestForm_Name.Text = "";
+            NewEventRequestForm_Email.Text = "";
+            NewEventRequestForm_Number.Text = "";
+            NewEventRequestForm_Budget.Value = 0;
+            NewEventRequestForm_Type.SelectedIndex = 0;
+            NewEventRequestForm_DateFrom.Clear();
+            NewEventRequestForm_DateTo.Clear();
+            NewEventRequestForm_Descr.Text = "";
 
+
+            InterfaceByUser();
         }
 
         protected void RequestEvent_Reject_Click(object sender, EventArgs e)
         {
+            EventRequestControl.CancelRequest(Convert.ToInt32(RequestEvent_EventId.Text));
             InterfaceByUser();
         }
 
@@ -508,9 +595,13 @@ namespace MM_Events
 
         protected void ViewTask_Accept_Click(object sender, EventArgs e)
         {
+            Decimal _deciInput = Convert.ToDecimal(ViewTask_ExtraBudget.Value);
+            string _commentText = ViewTask_ExtraComment.Text;
+
             RadButton _sender = (RadButton)sender;
             if (_sender.CommandName == "FINANCIAL")
             {
+                #region  insert financial request
                 List<string[]> _parameters = new List<string[]>();
                 _parameters.Add(new string[] { "@ReqType", "FINANCE" });
                 _parameters.Add(new string[] { "@ReqResp", "FM" });
@@ -522,32 +613,34 @@ namespace MM_Events
 
                 string _createRequestQuery = "insert into [Request] ([ReqType], [ReqResp], [ReqDescr], [ReqDate], [ReqTaskId], [ReqStatus], [ReqBudget]) " +
                     " values (@ReqType, @ReqResp, @ReqDescr, @ReqDate, @ReqTaskId, @ReqStatus, @ReqBudget)";
-
+                #endregion
                 Data_Utilities.ModifyDataBase_Parameters(_createRequestQuery, _parameters);
-
-                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), _deciInput, _commentText);
             }
-
             if (_sender.CommandName == "CLOSE")
-                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
-
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), _deciInput, _commentText);
             if (_sender.CommandName == "PENDING")
-                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), Convert.ToDecimal(ViewTask_ExtraBudget.Value), ViewTask_ExtraComment.Text);
-            
+                TaskControl.SubmitTask(Convert.ToInt32(_sender.Value), _deciInput, _commentText);
             InterfaceByUser();
         }
 
         protected void FinanceRequest_Click(object sender, EventArgs e)
         {
             RadButton _sender = (RadButton)sender;
-
-
             bool _accept = _sender.Value == "true";
+
+            FinancialRequestControl.SubmitFinancialRequest(Convert.ToInt32(_sender.CommandName), _accept);
+            InterfaceByUser();
         }
 
         protected void OutsourceRequest_Send_Click(object sender, EventArgs e)
         {
+            RadButton _sender = (RadButton)sender;
+            bool _accept = _sender.CommandName == "true";
 
+            OutsourceRequestControl.SubmitRequest(Convert.ToInt32(_sender.Value),_accept);
+
+            InterfaceByUser();
         }
 
         protected void EventOutsourceRequest_Create_Click(object sender, EventArgs e)
@@ -557,8 +650,8 @@ namespace MM_Events
 
             List<string[]> _parameters = new List<string[]>();
             _parameters.Add(new string[] { "@ReqType", "OUTSOURCE" });
-            _parameters.Add(new string[] { "@ReqResp", "HM" });
-            _parameters.Add(new string[] { "@ReqDescr", EventOutsourceRequest_Description.Text });
+            _parameters.Add(new string[] { "@ReqResp", "HR" });
+            _parameters.Add(new string[] { "@ReqDescr", EventOutsourceRequest_Name.Text + "|" + EventOutsourceRequest_Description.Text + "|" + EventOutsourceRequest_Subteam.SelectedValue});
             _parameters.Add(new string[] { "@ReqDate", (DateTime.Today).ToString("yyyy.MM.dd") });
             _parameters.Add(new string[] { "@ReqTaskId", _eventId });
             _parameters.Add(new string[] { "@ReqStatus", "OPEN" });
@@ -574,7 +667,37 @@ namespace MM_Events
             EventOutsourceRequest_Feedback.Text = "Outsource request created";
         }
 
+        // returns true if input date is older than aDays from today
+        private bool IsDateOlderThanNumOfDays_FromToday(string aDateField, int aDays)
+        {
+            DateTime _dateValue;
+            if (DateTime.TryParse(aDateField, out _dateValue))
+                return (DateTime.Today - _dateValue).TotalDays > aDays;
+            else return false;
+        }
+
+        protected void Radgrid_Events_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                // Get each line
+                GridDataItem _item = (GridDataItem)e.Item;
+
+                // Get status value
+                DateTime _dateFrom = DateTime.Parse(_item["EventFrom"].Text);
+                //NOTE: Temporary codes
+                // Should be added to table in database
+                if(DateTime.Today > _dateFrom)
+                    e.Item.BackColor = System.Drawing.Color.PapayaWhip; 
+                else if (DateTime.Today == _dateFrom)
+                    e.Item.BackColor = System.Drawing.Color.LightCoral; 
+               // else if(IsDateOlderThanNumOfDays_FromToday(_item["EventFrom"].Text,10))
+                 //   e.Item.BackColor = System.Drawing.Color.PapayaWhip; 
+                
 
 
+            }
+        
+        }
     }
 }
