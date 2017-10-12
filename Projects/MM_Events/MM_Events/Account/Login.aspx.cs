@@ -16,7 +16,7 @@ namespace MM_Events.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Password.Text = "hallo1";
+            //Password.Text = "hallo1";
 
             RegisterHyperLink.NavigateUrl = "Register";
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
@@ -29,22 +29,22 @@ namespace MM_Events.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            Login_Name(UserName.Text);
+            Login_Name(UserName.Text, Password.Text);
         }
 
         protected void LogIn_Extra(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            Login_Name(btn.Text.Split('-')[0].Trim());
+            Login_Name(btn.Text.Split('-')[0].Trim(), "hallo1");
         }
 
-        private void Login_Name(string aName)
+        private void Login_Name(string aName, string aPass)
         {
             if (true)
             {
                 // Validate the user password
                 var manager = new UserManager();
-                ApplicationUser user = manager.Find(aName, "hallo1"); // Password.Text
+                ApplicationUser user = manager.Find(aName, aPass); // Password.Text
                 if (user != null)
                 {
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
@@ -61,7 +61,7 @@ namespace MM_Events.Account
         protected void Login_Telerik_Click(object sender, EventArgs e)
         {
             RadButton _sender = (RadButton) sender;
-            Login_Name(_sender.Value);
+            Login_Name(_sender.Value, "hallo1");
         }
     }
 }

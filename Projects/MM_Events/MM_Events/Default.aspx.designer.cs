@@ -157,24 +157,6 @@ namespace MM_Events {
         protected global::Telerik.Web.UI.RadNumericTextBox FinanceRequest_Original;
         
         /// <summary>
-        /// FinanceRequest_Extra_Label control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel FinanceRequest_Extra_Label;
-        
-        /// <summary>
-        /// FinanceRequest_Extra control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox FinanceRequest_Extra;
-        
-        /// <summary>
         /// FinanceRequest_Reject control.
         /// </summary>
         /// <remarks>
@@ -262,7 +244,7 @@ namespace MM_Events {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox OutsourceRequest_Subteam;
+        protected global::Telerik.Web.UI.RadTextBox OutsourceRequest_Subteam;
         
         /// <summary>
         /// RadLabel3 control.
@@ -607,6 +589,15 @@ namespace MM_Events {
         protected global::Telerik.Web.UI.RadTextBox EventForm_Type;
         
         /// <summary>
+        /// EventForm_Task_Info control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EventForm_Task_Info;
+        
+        /// <summary>
         /// EventForm_Task control.
         /// </summary>
         /// <remarks>
@@ -722,6 +713,15 @@ namespace MM_Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox Task_Feedback;
+        
+        /// <summary>
+        /// EventForm_OutsourceRequest_Info control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EventForm_OutsourceRequest_Info;
         
         /// <summary>
         /// EventForm_OutsourceRequest control.

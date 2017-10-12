@@ -9,6 +9,12 @@
     <telerik:RadCodeBlock runat="server" ID="RadCodaBlock1">
         <script type="text/javascript">
 
+
+            function CloseActiveWindow(sender, args)
+            {
+                $find('<%= WindowManager.ClientID %>').closeActiveWindow();
+            }
+
             function OpenEventFromTask(sender, args)
             {
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Event");
@@ -24,31 +30,31 @@
             function openNewEventRequestForm(sender, args)
             {
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_NewRequest");
-                openModalWindow($find('<%= Window_NewEventRequestForm.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_NewEventRequestForm.ClientID %>'), 0.7, 0.7);
             }
 
             function openTaskForm(sender, args) {
                 var _taskId = sender.get_value();
-                console.log(_taskId);
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Task;" + _taskId);
-                openModalWindow($find('<%= Window_ViewTask.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_ViewTask.ClientID %>'), 0.7, 0.7);
             }
             
             function openRequestForm(sender, args) {
                 var _requestId = sender.get_value();
+                console.log(_requestId);
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_Request;" + _requestId);
-                openModalWindow($find('<%= Window_RequestEvent.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_RequestEvent.ClientID %>'), 0.7, 0.7);
             }
             
             function openRequestForm_Finance(sender, args) {
                 var _requestId = sender.get_value();
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_RequestFinance;" + _requestId);
-                openModalWindow($find('<%= Window_FinanceRequest.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_FinanceRequest.ClientID %>'), 0.7, 0.7);
             }
             function openRequestForm_Outsource(sender, args) {
                 var _requestId = sender.get_value();
                 $find('<%= EventsAfstemmingar_AjaxManager.ClientID %>').ajaxRequest("init_RequestOutsource;" + _requestId);
-                openModalWindow($find('<%= Window_OutsourceRequest.ClientID %>'), 0.5, 0.5);
+                openModalWindow($find('<%= Window_OutsourceRequest.ClientID %>'), 0.7, 0.7);
             }
 
             function openModalWindow(aReference, aWidth, aHeight) {
@@ -133,20 +139,49 @@
                     <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Department" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Descr" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Original" LoadingPanelID="LoadingPanel1" />
-                    <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Extra" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Reject" LoadingPanelID="LoadingPanel1" UpdatePanelRenderMode="Inline" />
+                    <telerik:AjaxUpdatedControl ControlID="FinanceRequest_Accept" LoadingPanelID="LoadingPanel1" UpdatePanelRenderMode="Inline"/>
 
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Name" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Subteam" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Descr" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Regarding" LoadingPanelID="LoadingPanel1" />
                     <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_ViewEvent" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Reject" LoadingPanelID="LoadingPanel1" UpdatePanelRenderMode="Inline"  />
+                    <telerik:AjaxUpdatedControl ControlID="OutsourceRequest_Accept" LoadingPanelID="LoadingPanel1" UpdatePanelRenderMode="Inline" />
                     
-                    <telerik:AjaxUpdatedControl ControlID="EventForm_OutsourceRequest" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="Task_Feedback" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Feedback" LoadingPanelID="LoadingPanel1" />
 
+                    <telerik:AjaxUpdatedControl ControlID="EventForm_Task_Info" LoadingPanelID="LoadingPanel1" />
+                    <telerik:AjaxUpdatedControl ControlID="EventForm_OutsourceRequest_Info" LoadingPanelID="LoadingPanel1" />
                     
                 </UpdatedControls>
             </telerik:AjaxSetting>
             
+            
+            <telerik:AjaxSetting AjaxControlID="RequestEvent_Reject">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="RequestEvent_Forward">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
+            <telerik:AjaxSetting AjaxControlID="OutsourceRequest_Reject">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="OutsourceRequest_Accept">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
             <telerik:AjaxSetting AjaxControlID="ViewTask_Accept">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Div_GeneratedTasks" LoadingPanelID="LoadingPanel1" />
@@ -186,6 +221,7 @@
 
                     
                    
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1"/>
 
                 </UpdatedControls>
             </telerik:AjaxSetting>
@@ -199,12 +235,23 @@
             <telerik:AjaxSetting AjaxControlID="EventOutsourceRequest_Create">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="Radgrid_Events" LoadingPanelID="LoadingPanel1"/>
+                    <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Name" LoadingPanelID="LoadingPanel1"/>
+                    <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Subteam" LoadingPanelID="LoadingPanel1"/>
+                    <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Description" LoadingPanelID="LoadingPanel1"/>
                     <telerik:AjaxUpdatedControl ControlID="EventOutsourceRequest_Feedback" LoadingPanelID="LoadingPanel1"/>
                     
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            
-            
+            <telerik:AjaxSetting AjaxControlID="FinanceRequest_Reject">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1"/>
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="FinanceRequest_Accept">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="Div_GeneratedRequests" LoadingPanelID="LoadingPanel1"/>
+                </UpdatedControls>
+            </telerik:AjaxSetting>
         </AjaxSettings>
     </telerik:RadAjaxManager>
 
@@ -215,15 +262,15 @@
             <telerik:WindowShortcut CommandName="CloseAll" Shortcut="Esc" />
         </Shortcuts>
         <Windows>
-            <telerik:RadWindow runat="server" ID="Window_FinanceRequest" Title="Event View">
+            <telerik:RadWindow runat="server" ID="Window_FinanceRequest" Title="Event View" Skin="Office2007" >
                 <ContentTemplate>
                     <div style="background-color:aliceblue; padding:10px">
                         <h1>Financial request</h1>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
                                 <div style="float:left">
-                                    <telerik:RadLabel runat="server" ID="FinanceRequest_Event_Label" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="FinanceRequest_Event" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server" ID="FinanceRequest_Event_Label" Text="Regarding" Skin="Office2007"  Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" ID="FinanceRequest_Event" Skin="Office2007"  RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
                                     <telerik:RadButton runat="server" ID="FinanceRequest_ViewEvent" RenderMode="Lightweight" Skin="Simple"
@@ -235,36 +282,37 @@
                         </div>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="FinanceRequest_Name_Label" Skin="Office2007"  Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Name" Skin="Office2007"  RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Department_Label" Text="Department" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Department" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="FinanceRequest_Department_Label" Skin="Office2007"  Text="Department" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Department" Skin="Office2007"  RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
+                            </div>
+                        <div style="margin:5%; clear:both">
+
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Descr" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="FinanceRequest_Descr_Label" Skin="Office2007"  Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="FinanceRequest_Descr" Skin="Office2007" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
+                                     RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                         </div>
                         
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Original_Label" Text="Planned budget" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadNumericTextBox runat="server" ID="FinanceRequest_Original" MinValue="0" RenderMode="Lightweight" ReadOnly="true"></telerik:RadNumericTextBox>
+                                <telerik:RadLabel runat="server" ID="FinanceRequest_Original_Label" Skin="Office2007"  Text="Needed budget" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadNumericTextBox runat="server" Skin="Office2007"  ID="FinanceRequest_Original" MinValue="0" RenderMode="Lightweight" ReadOnly="true"></telerik:RadNumericTextBox>
                             </div>
-                            <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="FinanceRequest_Extra_Label" Text="Needed budget" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadNumericTextBox runat="server" ID="FinanceRequest_Extra" MinValue="0" RenderMode="Lightweight" ReadOnly="true"></telerik:RadNumericTextBox>
-                            </div>
+                            
                         </div>
                         <div style="margin:5%; clear:both">
                             <telerik:RadButton runat="server" ID="FinanceRequest_Reject" RenderMode="Lightweight" Text="Reject" Skin="Sunset" 
-                                OnClick="FinanceRequest_Click" Value="false">
+                               OnClientClicked="CloseActiveWindow" OnClick="FinanceRequest_Click" Value="false" Width="150px">
                                 <Icon SecondaryIconCssClass="rbCancel" SecondaryIconRight="5px" />
                             </telerik:RadButton>
                             <telerik:RadButton runat="server" ID="FinanceRequest_Accept" RenderMode="Lightweight" Text="Accept" Skin="Telerik" 
-                                OnClick="FinanceRequest_Click" Value="true">
+                               OnClientClicked="CloseActiveWindow" OnClick="FinanceRequest_Click" Value="true" Width="150px">
                                 <Icon SecondaryIconCssClass="rbOk" SecondaryIconRight="5px" />
                             </telerik:RadButton>
                         </div>
@@ -272,15 +320,15 @@
                     </div>
                 </ContentTemplate>
             </telerik:RadWindow>
-            <telerik:RadWindow runat="server" ID="Window_OutsourceRequest" Title="Event View">
+            <telerik:RadWindow runat="server" ID="Window_OutsourceRequest" Title="Event View" Skin="Office2007" >
                 <ContentTemplate>
                     <div style="background-color:aliceblue; padding:10px">
                         <h1>Outsource request</h1>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
                                 <div style="float:left">
-                                    <telerik:RadLabel runat="server" ID="RadLabel4" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="OutsourceRequest_Regarding" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server" Skin="Office2007"  ID="RadLabel4" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" Skin="Office2007"  ID="OutsourceRequest_Regarding" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
                                     <telerik:RadButton runat="server" ID="OutsourceRequest_ViewEvent" RenderMode="Lightweight" Skin="Simple"
@@ -292,35 +340,33 @@
                         </div>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="RadLabel1" Text="Title" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="OutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" Skin="Office2007" ID="RadLabel1" Text="Title" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" Skin="Office2007" ID="OutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                         </div>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="RadLabel2" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadComboBox runat="server" ID="OutsourceRequest_Subteam" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
-                                     EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
+                                <telerik:RadLabel runat="server" ID="RadLabel2" Skin="Office2007" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextbox runat="server" Skin="Office2007" ID="OutsourceRequest_Subteam" RenderMode="Lightweight"></telerik:RadTextbox>
                                     
-                                </telerik:RadComboBox>
                             </div>
                         </div>
                         <div style="margin:5%; clear:both">
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="RadLabel3" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                 <telerik:RadTextBox runat="server" ID="OutsourceRequest_Descr" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
+                                <telerik:RadLabel runat="server" ID="RadLabel3" Skin="Office2007" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                 <telerik:RadTextBox runat="server" ID="OutsourceRequest_Descr" Skin="Office2007" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
                                     EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
                         </div>
                         
                         <div style="margin:5%; clear:both">
                             <telerik:RadButton runat="server" ID="OutsourceRequest_Reject" RenderMode="Lightweight" Text="Reject request" Skin="Sunset"
-                                OnClick="OutsourceRequest_Send_Click">
+                                Width="150px" OnClick="OutsourceRequest_Send_Click" CommandName="false" OnClientClicked="CloseActiveWindow">
                                 <Icon SecondaryIconCssClass="rbCancel" SecondaryIconRight="5px" />
                             </telerik:RadButton>
                             <telerik:RadButton runat="server" ID="OutsourceRequest_Accept" RenderMode="Lightweight" Text="Approve outsource request" Skin="Telerik"
-                                OnClick="OutsourceRequest_Send_Click">
+                               Width="150px"  OnClick="OutsourceRequest_Send_Click" CommandName="true" OnClientClicked="CloseActiveWindow">
                                 <Icon SecondaryIconCssClass="rbOk" SecondaryIconRight="5px" />
                             </telerik:RadButton>
                         </div>
@@ -328,28 +374,28 @@
                     </div>
                 </ContentTemplate>
             </telerik:RadWindow>
-            <telerik:RadWindow runat="server" ID="Window_ViewTask" Title="Event View">
+            <telerik:RadWindow runat="server" ID="Window_ViewTask" Title="Event View" Skin="Office2007" >
                 <ContentTemplate>
                     <div style="background-color:aliceblue; padding:10px">
                         <h1>Task</h1>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_DueDate_Label" Text="Duedate" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_DueDate" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_DueDate_Label" Skin="Office2007" Text="Duedate" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_DueDate" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                         </div>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_Name_Label" Skin="Office2007" Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Name" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Descr" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_Descr_Label" Skin="Office2007" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Descr" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_CreatedInfo_Label" Text="Created by" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_CreatedInfo" RenderMode="Lightweight" Width="200px"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_CreatedInfo_Label" Skin="Office2007" Text="Created by" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_CreatedInfo" Skin="Office2007" RenderMode="Lightweight" Width="200px"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
                                 <telerik:RadButton runat="server" ID="ViewTask_OpenEventInformation" RenderMode="Lightweight" Skin="Simple"
@@ -361,24 +407,24 @@
                         
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_Budget_Label" Text="Budget" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_Budget_Label" Skin="Office2007" Text="Budget" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_Budget" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraBudget_Label" Text="Needed budget (if needed)" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadNumericTextBox runat="server" ID="ViewTask_ExtraBudget" MinValue="0" RenderMode="Lightweight"></telerik:RadNumericTextBox>
+                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraBudget_Label" Skin="Office2007" Text="Needed budget (if needed)" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadNumericTextBox runat="server" ID="ViewTask_ExtraBudget" Skin="Office2007" MinValue="0" RenderMode="Lightweight"></telerik:RadNumericTextBox>
                             </div>
                         </div>
                         <div style="margin:5%;clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraComment_Label" Text="Reason for needed budget" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="ViewTask_ExtraComment" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
+                                <telerik:RadLabel runat="server" ID="ViewTask_ExtraComment_Label" Skin="Office2007" Text="Reason for needed budget" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="ViewTask_ExtraComment" Skin="Office2007" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
                                     EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
                         </div>
                         <div style="margin:5%; clear:both">
                             <telerik:RadButton runat="server" ID="ViewTask_Accept" RenderMode="Lightweight" Skin="Telerik"
-                                OnClick="ViewTask_Accept_Click">
+                                OnClick="ViewTask_Accept_Click" OnClientClicked="CloseActiveWindow">
                                 <Icon SecondaryIconCssClass="rbOk" SecondaryIconRight="5px" />
                             </telerik:RadButton>
                         </div>
@@ -386,84 +432,87 @@
                     </div>
                 </ContentTemplate>
             </telerik:RadWindow>
-            <telerik:RadWindow runat="server" ID="Window_EventForm" Title="Event View">
+            <telerik:RadWindow runat="server" ID="Window_EventForm" Title="Event View" Skin="Office2007" >
                 <ContentTemplate>
-                    <h1>Event</h1>
                     <div style="background-color:aliceblue; padding:10px">
+                    <h1>Event</h1>
+
                         <div id="EventForm_Header">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_Name_Label" Skin="Office2007" Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Name" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_Description_Label" Text="Description" Font-Bold="true" ></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Description" RenderMode="Lightweight" Width="500px"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_Description_Label" Skin="Office2007" Text="Description" Font-Bold="true" ></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Description" Skin="Office2007" RenderMode="Lightweight" Width="500px"></telerik:RadTextBox>
                             </div>
                         </div>
                         <div id="EventForm_Date" style="clear:both">
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_From_Label" Text="Date Start" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_From" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_From_Label" Skin="Office2007" Text="Date Start" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_From" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_To_Label" Text="Date End" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_To" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_To_Label" Skin="Office2007" Text="Date End" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_To" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                         </div>
                         <div id="EventForm_Info" style="clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_Comment_Label" Text="Financial Comment" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Comment" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_Comment_Label" Skin="Office2007" Text="Financial Comment" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Comment" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                             <div style="float:left; margin:5px 10px">
                                 <telerik:RadLabel runat="server" ID="EventForm_Budget_Label" Text="Budget" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Budget" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_Guests_Label" Text="Guests" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Guests" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_Guests_Label" Skin="Office2007" Text="Guests" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Guests" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
 
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="EventForm_Type_Label" Text="Type of event" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="EventForm_Type" RenderMode="Lightweight"></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="EventForm_Type_Label" Skin="Office2007" Text="Type of event" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="EventForm_Type" Skin="Office2007" RenderMode="Lightweight"></telerik:RadTextBox>
                             </div>
                         </div>
+                        <div id="EventForm_Task_Info" runat="server"  style="clear:both"></div>
                         <div id="EventForm_Task" runat="server"  style="clear:both">
+
                             <h3>Create a task</h3>
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="Task_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="Task_Name" EmptyMessage="Name..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="Task_Name_Label" Skin="Office2007" Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="Task_Name" Skin="Office2007" EmptyMessage="Name..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
                            
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="Task_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTextBox runat="server" ID="Task_Descr" EmptyMessage="Description..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                                <telerik:RadLabel runat="server" ID="Task_Descr_Label" Skin="Office2007" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTextBox runat="server" ID="Task_Descr" Skin="Office2007" EmptyMessage="Description..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
                             
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="Task_Subteams_Label" Text="Assign a task to sub team" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadComboBox runat="server" ID="Task_Subteams" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
+                                <telerik:RadLabel runat="server" ID="Task_Subteams_Label" Skin="Office2007" Text="Assign a task to sub team" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadComboBox runat="server" ID="Task_Subteams" Skin="Office2007" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
                                      EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
                                     
                                 </telerik:RadComboBox>
                             </div>
                             
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="Task_Budget_Label" Text="Budget for task" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadNumericTextBox runat="server" ID="Task_Budget" EmptyMessage="Budget..." RenderMode="Lightweight"  AutoPostBack="false" >
+                                <telerik:RadLabel runat="server" ID="Task_Budget_Label" Skin="Office2007" Text="Budget for task" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadNumericTextBox runat="server" ID="Task_Budget" Skin="Office2007" EmptyMessage="Budget..." RenderMode="Lightweight"  AutoPostBack="false" >
                                 </telerik:RadNumericTextBox>
                             </div>
                             
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="Task_DueDate_Label" Text="Do before" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadDatePicker runat="server" ID="Task_DueDate" DateInput-EmptyMessage="DueDate..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadDatePicker>
+                                <telerik:RadLabel runat="server" ID="Task_DueDate_Label" Skin="Office2007" Text="Do before" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadDatePicker runat="server" ID="Task_DueDate" Skin="Office2007" DateInput-EmptyMessage="DueDate..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadDatePicker>
                             </div>
                             
                             <telerik:RadButton runat="server" ID="Task_AddTaskToEvent" Text="Create Task" AutoPostBack="true" RenderMode="Lightweight"
@@ -474,23 +523,24 @@
                         <div id="EventForm_Actions" style="clear:both;text-align:center">
                             <p>----------------------------------</p>
                         </div>
+                        <div id="EventForm_OutsourceRequest_Info" runat="server"  style="clear:both"></div>
                         <div id="EventForm_OutsourceRequest" runat="server"  style="clear:both">
                         <h3>Create an outsource request</h3>
 
                         <div style="float:left; margin:5px 10px">
-                            <telerik:RadLabel runat="server" ID="RadLabel7" Text="Outsource Name" Font-Bold="true"></telerik:RadLabel>
-                            <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                            <telerik:RadLabel runat="server" ID="RadLabel7" Skin="Office2007" Text="Outsource Name" Font-Bold="true"></telerik:RadLabel>
+                            <telerik:RadTextBox runat="server" Skin="Office2007" ID="EventOutsourceRequest_Name" RenderMode="Lightweight"></telerik:RadTextBox>
                         </div>
                         <div style="float:left; margin:5px 10px">
-                            <telerik:RadLabel runat="server" ID="RadLabel5" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
-                            <telerik:RadComboBox runat="server" ID="EventOutsourceRequest_Subteam" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
+                            <telerik:RadLabel runat="server" ID="RadLabel5" Skin="Office2007" Text="Outsource for" Font-Bold="true"></telerik:RadLabel>
+                            <telerik:RadComboBox runat="server" Skin="Office2007" ID="EventOutsourceRequest_Subteam" Filter="Contains" DropDownAutoWidth="Enabled" MarkFirstMatch="true"
                                     EmptyMessage="Select subteam..."  RenderMode="Lightweight"  AutoPostBack="false" >
                                
                             </telerik:RadComboBox>
                         </div>
                         <div style="margin:5%; clear:both">
                             <div style="float:left; margin:5px 10px">
-                                <telerik:RadLabel runat="server" ID="RadLabel6" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadLabel runat="server" ID="RadLabel6" Skin="Office2007" Text="Description" Font-Bold="true"></telerik:RadLabel>
                                  <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Description" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
                                     EmptyMessage="Comment" RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                             </div>
@@ -498,7 +548,7 @@
                         <div style="margin:5%; clear:both">
                             <telerik:RadButton runat="server" ID="EventOutsourceRequest_Create" Text="Create Task" AutoPostBack="true" RenderMode="Lightweight"
                                 Skin="Simple" OnClick="EventOutsourceRequest_Create_Click" ></telerik:RadButton>
-                            <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Feedback" Width="250px"
+                            <telerik:RadTextBox runat="server" ID="EventOutsourceRequest_Feedback" Width="250px" Skin="Office2007" 
                                  RenderMode="Lightweight" ></telerik:RadTextBox>
                         </div>
                         </div>
@@ -506,36 +556,36 @@
                 </ContentTemplate>
                
             </telerik:RadWindow>
-            <telerik:RadWindow runat="server" ID="Window_NewEventRequestForm" Title="New Event Request">
+            <telerik:RadWindow runat="server" ID="Window_NewEventRequestForm" Title="New Event Request" Skin="Office2007" >
                 <ContentTemplate>
                     <div>
-                        <h1>New event request</h1>
                         <div id="Div_NewEventRequestForm" style="background-color:aliceblue; padding:10px">
+                        <h1>New event request</h1>
                             <div style="margin:5%">
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="NewEventRequestForm_Name" EmptyMessage="Name..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Name" EmptyMessage="Name..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px ">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Number_Label" Text="Contact number" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="NewEventRequestForm_Number" EmptyMessage="Number..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_Number_Label" Text="Contact number" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Number" EmptyMessage="Number..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Email_Label" Text="Contact email" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="NewEventRequestForm_Email" EmptyMessage="Email..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server" Skin="Office2007"  ID="NewEventRequestForm_Email_Label" Text="Contact email" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Email" EmptyMessage="Email..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                                 </div>
                             </div>
                             <div style="margin:5%;clear:both">
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="NewEventRequestForm_Descr" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Descr" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"
                                          EmptyMessage="Description..." RenderMode="Lightweight"  AutoPostBack="false" ></telerik:RadTextBox>
                                 </div>
                             </div>
                             <div style="margin:5%;clear:both">
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Type_Label" Text="Type of event" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadDropDownList runat="server" ID="NewEventRequestForm_Type" RenderMode="Lightweight" >
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_Type_Label" Text="Type of event" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadDropDownList runat="server" Skin="Office2007" ID="NewEventRequestForm_Type" RenderMode="Lightweight" >
                                         <Items>
                                             <telerik:DropDownListItem Text="Wedding" Value="WEDDING" />
                                             <telerik:DropDownListItem Text="Conference" Value="CONFERENCE" />
@@ -545,36 +595,36 @@
                                     </telerik:RadDropDownList>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Budget_Label" Text="Budget idea" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadNumericTextBox runat="server" ID="NewEventRequestForm_Budget" EmptyMessage="Budget..." RenderMode="Lightweight"  AutoPostBack="false" >
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_Budget_Label" Text="Budget idea" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadNumericTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Budget" EmptyMessage="Budget..." RenderMode="Lightweight"  AutoPostBack="false" >
                                     </telerik:RadNumericTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_Guests_Label" Text="Number of guests" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadLabel runat="server" Skin="Office2007"  ID="NewEventRequestForm_Guests_Label" Text="Number of guests" Font-Bold="true"></telerik:RadLabel>
                                     <div style="display:block">
-                                        <telerik:RadNumericTextBox runat="server" ID="NewEventRequestForm_Guests" EmptyMessage="Guests..." RenderMode="Lightweight"  AutoPostBack="false" >
+                                        <telerik:RadNumericTextBox Skin="Office2007" runat="server" ID="NewEventRequestForm_Guests" EmptyMessage="Guests..." RenderMode="Lightweight"  AutoPostBack="false" >
                                         </telerik:RadNumericTextBox>
                                     </div>
                                 </div>
                             </div>
                             <div style="margin:5%;clear:both">
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_DateFrom_Label" Text="Date from" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadDatePicker runat="server" ID="NewEventRequestForm_DateFrom" Width="180px" DateInput-EmptyMessage="Starting Date" RenderMode="Lightweight"  AutoPostBack="false" >
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_DateFrom_Label" Text="Date from" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadDatePicker runat="server" Skin="Office2007" ID="NewEventRequestForm_DateFrom" Width="180px" DateInput-EmptyMessage="Starting Date" RenderMode="Lightweight"  AutoPostBack="false" >
                                     </telerik:RadDatePicker>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="NewEventRequestForm_DateTo_Label" Text="Date to" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadDatePicker runat="server" ID="NewEventRequestForm_DateTo" Width="180px" DateInput-EmptyMessage="End Date" RenderMode="Lightweight"  AutoPostBack="false" >
+                                    <telerik:RadLabel runat="server" Skin="Office2007" ID="NewEventRequestForm_DateTo_Label" Text="Date to" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadDatePicker runat="server" Skin="Office2007" ID="NewEventRequestForm_DateTo" Width="180px" DateInput-EmptyMessage="End Date" RenderMode="Lightweight"  AutoPostBack="false" >
                                     </telerik:RadDatePicker>
                                 </div>
                            </div>
                             <div style="clear:both;float:right">
-                            <telerik:RadButton runat="server" ID="NewEventRequestForm_SendNewRequest" Text="Create Task" AutoPostBack="true" RenderMode="Lightweight"
+                            <telerik:RadButton runat="server" ID="NewEventRequestForm_SendNewRequest" Text="Create New Event Request" AutoPostBack="true" RenderMode="Lightweight"
                                 OnClick="NewEventRequestForm_SendNewRequest_Click" Skin="Simple" >
                                 <Icon SecondaryIconRight="5px" SecondaryIconCssClass="rbOk" />
                             </telerik:RadButton>
-                            <telerik:RadTextBox runat="server" ID="NewEventRequestForm_Feedback" RenderMode="Lightweight" ></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" Skin="Office2007" ID="NewEventRequestForm_Feedback" RenderMode="Lightweight" ></telerik:RadTextBox>
                             </div>
                             <div style="clear:both"></div>
                         </div>
@@ -582,57 +632,57 @@
                 </ContentTemplate>
                
             </telerik:RadWindow>
-            <telerik:RadWindow runat="server" ID="Window_RequestEvent" Title="Event Request">
+            <telerik:RadWindow runat="server" ID="Window_RequestEvent" Title="Event Request" Skin="Office2007" >
                 <ContentTemplate>
-                    <h1>Request for event</h1>
                     <div style="background-color:aliceblue; padding:10px">
+                    <h1>Request for event</h1>
                         <div id="RequestEvent_Event" >
                             <div style="margin:5%">
-                                <telerik:RadTextBox runat="server" ID="RequestEvent_EventId" RenderMode="Lightweight" Display="false" ></telerik:RadTextBox>
+                                <telerik:RadTextBox Skin="Office2007" runat="server" ID="RequestEvent_EventId" RenderMode="Lightweight" Display="false" ></telerik:RadTextBox>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Name" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel Skin="Office2007"  runat="server" ID="RequestEvent_Name_Label" Text="Name" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox Skin="Office2007" runat="server" ID="RequestEvent_Name" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_From_Label" Text="Event from" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_From" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel Skin="Office2007"  runat="server" ID="RequestEvent_From_Label" Text="Event from" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_From" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_To_Label" Text="Event to" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_To" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_To_Label" Text="Event to" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_To" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Budget_Label" Text="Budget" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel Skin="Office2007"  runat="server" ID="RequestEvent_Budget_Label" Text="Budget" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_Budget" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                  <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Guests_Label" Text="Guests" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Guests" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_Guests_Label" Text="Guests" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_Guests" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Type_Label" Text="Type" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Type" RenderMode="Lightweight"></telerik:RadTextBox>
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_Type_Label" Text="Type" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_Type" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Comment_Label" Text="Comment" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Comment" RenderMode="Lightweight"></telerik:RadTextBox>
-                                </div>
-                            </div>
-                            <div style="margin:5%;clear:both">
-                                <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" ID="RequestEvent_Descr" RenderMode="Lightweight" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"></telerik:RadTextBox>
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_Comment_Label" Text="Comment" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_Comment" RenderMode="Lightweight"></telerik:RadTextBox>
                                 </div>
                             </div>
                             <div style="margin:5%;clear:both">
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_FM_Budget_Label" Text="Financial Managers budget" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadNumericTextBox runat="server" EmptyMessage="Financial Budget" 
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_Descr_Label" Text="Description" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox  Skin="Office2007" runat="server" ID="RequestEvent_Descr" RenderMode="Lightweight" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"></telerik:RadTextBox>
+                                </div>
+                            </div>
+                            <div style="margin:5%;clear:both">
+                                <div style="float:left; margin:5px 10px">
+                                    <telerik:RadLabel  Skin="Office2007" runat="server" ID="RequestEvent_FM_Budget_Label" Text="Financial Managers budget" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadNumericTextBox  Skin="Office2007" runat="server" EmptyMessage="Financial Budget" 
                                         ID="RequestEvent_FM_Budget" RenderMode="Lightweight"></telerik:RadNumericTextBox>
                                 </div>
                                 <div style="float:left; margin:5px 10px">
-                                    <telerik:RadLabel runat="server" ID="RequestEvent_FM_Comment_Label" Text="Financial Managers feedback" Font-Bold="true"></telerik:RadLabel>
-                                    <telerik:RadTextBox runat="server" EmptyMessage="Financial feedback..."  ID="RequestEvent_FM_Comment" RenderMode="Lightweight" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"></telerik:RadTextBox>
+                                    <telerik:RadLabel runat="server"  Skin="Office2007"  ID="RequestEvent_FM_Comment_Label" Text="Financial Managers feedback" Font-Bold="true"></telerik:RadLabel>
+                                    <telerik:RadTextBox runat="server"  Skin="Office2007" EmptyMessage="Financial feedback..."  ID="RequestEvent_FM_Comment" RenderMode="Lightweight" TextMode="MultiLine" Columns="80" Rows="5" Width="100%"></telerik:RadTextBox>
                                 </div>
                             </div>
                             
@@ -640,13 +690,13 @@
                         <div id="RequestEvent_Buttons" style="margin-top:10px;clear:both">
                             <div style="float:left">
                                 <telerik:RadButton runat="server" id="RequestEvent_Reject" Text="Reject Request" RenderMode="Lightweight"
-                                    OnClick="RequestEvent_Reject_Click" Skin="Sunset">
+                                    OnClick="RequestEvent_Reject_Click" Skin="Sunset" OnClientClicked="CloseActiveWindow">
                                     <Icon SecondaryIconCssClass="rbCancel" />
                                 </telerik:RadButton>
                             </div>
                             <div style="float:right">
                                 <telerik:RadButton runat="server" id="RequestEvent_Forward" Text="Accept and Forward" RenderMode="Lightweight"
-                                     OnClick="RequestEvent_Forward_Click" Skin="Telerik">
+                                     OnClick="RequestEvent_Forward_Click" Skin="Telerik" OnClientClicked="CloseActiveWindow">
                                     <Icon SecondaryIconCssClass="rbNext" />
                                 </telerik:RadButton>
                             </div>
@@ -657,17 +707,17 @@
                             <div style="float:left">
                             <h2>Book a meeting!</h2>
 
-                                <telerik:RadLabel runat="server" ID="RadLabel45" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
-                                <telerik:RadTimePicker ID="NewCourse_TimeFrom" runat="server"  RenderMode="Lightweight"  DateInput-EmptyMessage="Time start">
+                                <telerik:RadLabel runat="server" Skin="Office2007"  ID="RadLabel45" Text="Regarding" Font-Bold="true"></telerik:RadLabel>
+                                <telerik:RadTimePicker ID="NewCourse_TimeFrom" Skin="Office2007"  runat="server"  RenderMode="Lightweight"  DateInput-EmptyMessage="Time start">
                                     <TimeView runat="server" StartTime="08:00" EndTime="17:00" Interval="0:30" TimeFormat="HH:mm"  ></TimeView>
                                 </telerik:RadTimePicker>
-                                <telerik:RadTimePicker ID="NewCourse_TimeTo" runat="server"   RenderMode="Lightweight" DateInput-EmptyMessage="Time end" >
+                                <telerik:RadTimePicker ID="NewCourse_TimeTo" Skin="Office2007"  runat="server"   RenderMode="Lightweight" DateInput-EmptyMessage="Time end" >
                                     <TimeView runat="server" StartTime="08:00" EndTime="17:00" Interval="0:30" TimeFormat="HH:mm"  ></TimeView>
                                 </telerik:RadTimePicker>
                             <telerik:RadCalendar RenderMode="Lightweight" runat="server" ID="RequestEvent_Calendar" AutoPostBack="false" 
                                 MultiViewColumns="3" ShowNavigationButtons="false"
                                 MultiViewRows="1" RangeSelectionMode="None" EnableViewSelector="true" 
-                                Skin="Web20" EnableMultiSelect="false" 
+                                 Skin="Office2007"  EnableMultiSelect="false" 
                                 ShowOtherMonthsDays="false" ShowFastNavigationButtons="false"
                                  >
             
@@ -681,7 +731,7 @@
                             </div>
                             <div style="float:right">
                                 <telerik:RadButton runat="server" ID="RequestEvent_BookMeeting" Text="Book Meeting" RenderMode="Lightweight"
-                                    OnClick="RequestEvent_BookMeeting_Click" Skin="Telerik">
+                                    OnClick="RequestEvent_BookMeeting_Click" Skin="Telerik" OnClientClicked="CloseActiveWindow">
                                     <Icon SecondaryIconCssClass="rbSave" SecondaryIconRight="5px" />
                                 </telerik:RadButton>
                             </div>
@@ -703,6 +753,7 @@
             </div>
             <telerik:RadGrid runat="server" ID="Radgrid_Events" RenderMode="Lightweight" Skin="Office2007" Height="600px"
                 AllowMultiRowSelection="true" 
+                OnItemDataBound="Radgrid_Events_ItemDataBound"
                 OnNeedDataSource="Radgrid_Events_NeedDataSource" >
                 <PagerStyle Mode="NextPrevNumericAndAdvanced" PageSizeControlType="RadComboBox" AlwaysVisible="True"></PagerStyle>
 

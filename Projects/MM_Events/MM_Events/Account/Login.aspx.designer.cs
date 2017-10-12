@@ -67,13 +67,13 @@ namespace MM_Events.Account {
         protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
         
         /// <summary>
-        /// RadButton7 control.
+        /// RadButton8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton RadButton7;
+        protected global::Telerik.Web.UI.RadButton RadButton8;
         
         /// <summary>
         /// RadButton6 control.
@@ -85,13 +85,13 @@ namespace MM_Events.Account {
         protected global::Telerik.Web.UI.RadButton RadButton6;
         
         /// <summary>
-        /// RadButton1 control.
+        /// RadButton15 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton RadButton1;
+        protected global::Telerik.Web.UI.RadButton RadButton15;
         
         /// <summary>
         /// RadButton2 control.
@@ -103,6 +103,15 @@ namespace MM_Events.Account {
         protected global::Telerik.Web.UI.RadButton RadButton2;
         
         /// <summary>
+        /// RadButton7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton7;
+        
+        /// <summary>
         /// RadButton3 control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,60 @@ namespace MM_Events.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton RadButton3;
+        
+        /// <summary>
+        /// RadButton10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton10;
+        
+        /// <summary>
+        /// RadButton14 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton14;
+        
+        /// <summary>
+        /// RadButton12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton12;
+        
+        /// <summary>
+        /// RadButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton1;
+        
+        /// <summary>
+        /// RadButton5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton5;
+        
+        /// <summary>
+        /// RadButton13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton13;
         
         /// <summary>
         /// RadButton4 control.
@@ -121,13 +184,22 @@ namespace MM_Events.Account {
         protected global::Telerik.Web.UI.RadButton RadButton4;
         
         /// <summary>
-        /// RadButton5 control.
+        /// RadButton9 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton RadButton5;
+        protected global::Telerik.Web.UI.RadButton RadButton9;
+        
+        /// <summary>
+        /// RadButton11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton11;
         
         /// <summary>
         /// OpenAuthLogin control.

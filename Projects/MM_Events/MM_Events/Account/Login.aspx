@@ -58,37 +58,68 @@
 
         <div class="col-md-4">
             <h4>Login with out custom made users - safe and easy!</h4>
-             <ul>
-                 <li>
+             <ul style="list-style:none">
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton8" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                    Text="ADAM - Audio Specialist" Value="ADAM" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton6" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="ALICE - Financial Manager" Value="ALICE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton15" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="CHARLIE - Vice President" Value="CHARLIE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton2" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="DANIEL - Chef" Value="DANIEL" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
                      <telerik:RadButton runat="server" ID="RadButton7" AutoPostBack="true" OnClick="Login_Telerik_Click" 
                      Text="JACK - Production Manager" Value="JACK" RenderMode="Lightweight"></telerik:RadButton>
                  </li>
                  
-                 <li>
-                     <telerik:RadButton runat="server" ID="RadButton6" AutoPostBack="true" OnClick="Login_Telerik_Click" 
-                     Text="ALICE - Financial Manager" Value="ALICE" RenderMode="Lightweight"></telerik:RadButton>
-                 </li>
-                 <li>
-                     <telerik:RadButton runat="server" ID="RadButton1" AutoPostBack="true" OnClick="Login_Telerik_Click" 
-                     Text="MARK - Administration" Value="MARK" RenderMode="Lightweight"></telerik:RadButton>
-                 </li>
-                 <li>
-                     <telerik:RadButton runat="server" ID="RadButton2" AutoPostBack="true" OnClick="Login_Telerik_Click" 
-                     Text="DANIEL - Chef" Value="DANIEL" RenderMode="Lightweight"></telerik:RadButton>
-                 </li>
-                 <li>
+                 <li style="margin:5px" >
                      <telerik:RadButton runat="server" ID="RadButton3" AutoPostBack="true" OnClick="Login_Telerik_Click" 
                      Text="JANET - Senior Customer Service" Value="JANET" RenderMode="Lightweight"></telerik:RadButton>
                  </li>
-                 <li>
-                     <telerik:RadButton runat="server" ID="RadButton4" AutoPostBack="true" OnClick="Login_Telerik_Click" 
-                     Text="SIMON - Human Resources" Value="SIMON" RenderMode="Lightweight"></telerik:RadButton>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton10" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="JULIA - Graphic designer" Value="JULIA" RenderMode="Lightweight"></telerik:RadButton>
                  </li>
-                 <li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton14" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="KATE - Senior Waitress" Value="KATE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton12" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="MAGY - Decoration Architecht" Value="MAGY" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton1" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="MIKE - Administration" Value="MIKE" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                  <li style="margin:5px" >
                      <telerik:RadButton runat="server" ID="RadButton5" AutoPostBack="true" OnClick="Login_Telerik_Click" 
                     Text="NATALIE - Service Department Manager" Value="NATALIE" RenderMode="Lightweight"></telerik:RadButton>
                  </li>
-
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton13" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                    Text="NICOLAS - Network Engineer" Value="NICOLAS" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                 <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton4" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="SIMON - Human Resources" Value="SIMON" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton9" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="SAM - Customer Service" Value="SAM" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
+                  <li style="margin:5px" >
+                     <telerik:RadButton runat="server" ID="RadButton11" AutoPostBack="true" OnClick="Login_Telerik_Click" 
+                     Text="TOBIAS - Photography" Value="TOBIAS" RenderMode="Lightweight"></telerik:RadButton>
+                 </li>
             </ul>
             <section id="socialLoginForm">
                 <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
