@@ -9,7 +9,7 @@ namespace MM_Events.Controls
         {
             var task = GetTaskForId(taskId);
 
-            var nextStatus = GetNextTaskStatus(task["TaskStatus"] as string, Convert.ToDecimal(task["TaskBudget"]), requestedBudget);
+            var nextStatus = GetNextTaskStatus(task["TaskStatus"] as string, requestedBudget);
             var subteam = task["TaskStatusMsg"] as string;
             var budget = Convert.ToDecimal(task["TaskBudget"]);
 
@@ -64,7 +64,7 @@ namespace MM_Events.Controls
             Data_Utilities.CloseTask(taskId);
         }
 
-        private static string GetNextTaskStatus(string taskStatus, decimal budget, decimal requestedBudgtet)
+        public static string GetNextTaskStatus(string taskStatus, decimal requestedBudgtet)
         {
             if (taskStatus == null)
             {

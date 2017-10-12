@@ -68,7 +68,7 @@ namespace MM_Events.Controls
             Data_Utilities.setEventStatusToAccepted(requestId);
         }
 
-        private static bool ShouldAccept(DataRow request)
+        public static bool ShouldAccept(DataRow request)
         {
             var responsible = request["ReqResp"] as string;
             var status = request["ReqStatus"] as string;
@@ -94,7 +94,7 @@ namespace MM_Events.Controls
             Data_Utilities.CancelEvent(requestId);
         }
 
-        private static string GetNextReceiver(string responsible)
+        public static string GetNextReceiver(string responsible)
         {
             switch (responsible)
             {
